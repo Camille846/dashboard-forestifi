@@ -4,6 +4,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { TranslationProvider } from "@/lib/i18n"
 import localFont from 'next/font/local'
+import Dashboard from "@/components/dashboard"
 
 const BRSonoma = localFont({
     src: [
@@ -44,7 +45,10 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning>
         <body className={BRSonoma.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-            <TranslationProvider>{children}</TranslationProvider>
+            <TranslationProvider>
+                <Dashboard />
+                {children}
+            </TranslationProvider>
         </ThemeProvider>
         </body>
         </html>
