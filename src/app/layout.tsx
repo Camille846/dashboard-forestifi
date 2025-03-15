@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { TranslationProvider } from "@/lib/i18n"
 import localFont from 'next/font/local'
 import Dashboard from "@/components/dashboard"
+import { Toaster } from "@/components/ui/sonner"
 
 const BRSonoma = localFont({
     src: [
@@ -48,6 +49,7 @@ export default function RootLayout({
             <TranslationProvider>
                 <Dashboard />
                 {children}
+                <Toaster />
             </TranslationProvider>
         </ThemeProvider>
         </body>

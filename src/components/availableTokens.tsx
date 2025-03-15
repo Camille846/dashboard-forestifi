@@ -1,9 +1,7 @@
-"use client"
-
 import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Users, Coins, ArrowUpRight, TrendingUp, ShoppingCart } from "lucide-react"
+import { Users, Coins, ArrowUpRight, TrendingUp, ShoppingCart, ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -17,6 +15,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { formatCurrency } from "@/lib/utils"
 import { useTranslation } from "@/lib/i18n"
+import {Avatar, AvatarImage} from "@/components/ui/avatar";
+import { toast } from "sonner";
 
 interface TokenStock {
     id: string
@@ -63,6 +63,7 @@ export function AvailableTokens() {
     const [simulateDialogOpen, setSimulateDialogOpen] = useState(false)
     const [selectedToken, setSelectedToken] = useState<TokenStock | null>(null)
     const [investmentAmount, setInvestmentAmount] = useState<number>(25)
+    const [currentIndex, setCurrentIndex] = useState(0)
 
     const handleSimulate = (token: TokenStock) => {
         setSelectedToken(token)
@@ -70,10 +71,15 @@ export function AvailableTokens() {
         setSimulateDialogOpen(true)
     }
 
+
     const handleBuy = (token: TokenStock) => {
-        // In a real application, this would navigate to a purchase flow
-        // or open a purchase dialog
-        alert(`Initiating purchase of ${token.name} token`)
+        toast(t("initiatingPurchase", { token: token.name }), {
+            description: t("purchaseDescription", { token: token.name }),
+            action: {
+                label: t("undo"),
+                onClick: () => console.log(t("undo")),
+            },
+        })
     }
 
     const calculateReturn = (amount: number, feePercentage: number) => {
@@ -85,95 +91,129 @@ export function AvailableTokens() {
         return amount * (feePercentage / 100)
     }
 
+    const getLogoSrc = (name: string) => {
+        switch (name) {
+            case "GUA 2":
+                return "/logoGua.png"
+            case "PIR 2":
+                return "/logoPir.jpg"
+            default:
+                return ""
+        }
+    }
+
+    const handleNext = () => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % availableTokens.length)
+    }
+
+    const handlePrev = () => {
+        setCurrentIndex((prevIndex) => (prevIndex - 1 + availableTokens.length) % availableTokens.length)
+    }
+
+    const currentToken = availableTokens[currentIndex]
+
     return (
         <>
-            <Card className="shadow-sm h-full">
+            <Card className="shadow-sm w-[30%] card">
                 <CardHeader className="pb-2">
                     <CardTitle>{t("availableTokens")}</CardTitle>
                     <CardDescription>{t("availableTokensDesc")}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="space-y-6">
-                        {availableTokens.map((token) => (
-                            <Card key={token.id} className="overflow-hidden">
-                                <CardContent className="p-6">
-                                    <div className="flex items-start justify-between mb-4">
-                                        <div>
-                                            <h3 className="text-2xl font-bold">{token.name}</h3>
-                                            <p className="text-sm text-muted-foreground">
-                                                {t("tokenValue")}: {formatCurrency(token.value)}
-                                            </p>
+                    <div className="relative">
+                            <Button
+                                variant="ghost"
+                                className="absolute left-3 top-2 hover:text-forestiYellow hover:bg-transparent hover:scale-110 transform transition-transform cursor-pointer p-0 hover:bg-primary"
+                                onClick={handlePrev}
+                            >
+                                <ChevronLeft className="h-5 w-5" />
+                            </Button>
+                            <Button variant="ghost" className="absolute right-3 top-2 hover:text-forestiYellow hover:bg-transparent hover:scale-110 transform transition-transform cursor-pointer p-0 hover:bg-primary" onClick={handleNext}>
+                                <ChevronRight className="h-5 w-5" />
+                            </Button>
+                        <Card className="overflow-hidden">
+                            <CardContent className="p-6">
+                                <div className="flex items-start justify-between mb-4">
+                                    <div>
+                                        <div className="flex items-center gap-2">
+                                            <Avatar className="border-2 border-primary w-12 h-12">
+                                                <AvatarImage src={getLogoSrc(currentToken.name)} alt={currentToken.name} />
+                                            </Avatar>
+                                            <h3 className="text-2xl font-bold text-primary dark:text-white">{currentToken.name}</h3>
                                         </div>
-                                        {token.trend && (
-                                            <div
-                                                className={`flex items-center ${
-                                                    token.trend === "up"
-                                                        ? "text-green-500"
-                                                        : token.trend === "down"
-                                                            ? "text-red-500"
-                                                            : "text-yellow-500"
-                                                }`}
-                                            >
-                                                {token.trend === "up" && <ArrowUpRight className="h-4 w-4" />}
-                                                {token.trendValue !== 0 && (
-                                                    <span className="text-sm font-medium ml-1">
-                            {token.trend === "up" ? "+" : ""}
-                                                        {token.trendValue}%
-                          </span>
-                                                )}
-                                            </div>
-                                        )}
+                                        <p className="text-sm text-black dark:text-forestiYellow">
+                                            {t("tokenValue")}: {formatCurrency(currentToken.value)}
+                                        </p>
+                                    </div>
+                                    {currentToken.trend && (
+                                        <div
+                                            className={`flex items-center ${
+                                                currentToken.trend === "up"
+                                                    ? "text-green-500"
+                                                    : currentToken.trend === "down"
+                                                        ? "text-red-500"
+                                                        : "text-yellow-500"
+                                            }`}
+                                        >
+                                            {currentToken.trend === "up" && <ArrowUpRight className="h-4 w-4" />}
+                                            {currentToken.trendValue !== 0 && (
+                                                <span className="text-sm font-medium ml-1">
+                                                    {currentToken.trend === "up" ? "+" : ""}
+                                                    {currentToken.trendValue}%
+                                                </span>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="space-y-4">
+                                    <div>
+                                        <div className="flex justify-between mb-2">
+                                            <span className="text-sm text-muted-foreground">{t("sold")}</span>
+                                            <span className="text-sm font-medium">{currentToken.percentageSold}%</span>
+                                        </div>
+                                        <Progress value={currentToken.percentageSold} className="h-2" />
                                     </div>
 
-                                    <div className="space-y-4">
+                                    <div className="grid grid-cols-2 gap-4">
                                         <div>
-                                            <div className="flex justify-between mb-2">
-                                                <span className="text-sm text-muted-foreground">{t("sold")}</span>
-                                                <span className="text-sm font-medium">{token.percentageSold}%</span>
-                                            </div>
-                                            <Progress value={token.percentageSold} className="h-2" />
+                                            <p className="text-sm text-muted-foreground mb-1">{t("captured")}</p>
+                                            <p className="text-sm font-medium">{formatCurrency(currentToken.captured)}</p>
                                         </div>
-
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div>
-                                                <p className="text-sm text-muted-foreground mb-1">{t("captured")}</p>
-                                                <p className="text-sm font-medium">{formatCurrency(token.captured)}</p>
-                                            </div>
-                                            <div>
-                                                <p className="text-sm text-muted-foreground mb-1">{t("fees")}</p>
-                                                <p className="text-sm font-medium">{token.fees}%</p>
-                                            </div>
-                                        </div>
-
-                                        <div className="flex items-center justify-between pt-4 border-t">
-                                            <div className="flex items-center">
-                                                <Users className="h-4 w-4 text-muted-foreground mr-2" />
-                                                <span className="text-sm">
-                          {token.buyers} {t("buyers")}
-                        </span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <Coins className="h-4 w-4 text-muted-foreground mr-2" />
-                                                <span className="text-sm">
-                          {token.tokensSold.toLocaleString()} {t("tokensSold")}
-                        </span>
-                                            </div>
-                                        </div>
-
-                                        <div className="grid grid-cols-2 gap-2 mt-4">
-                                            <Button variant="outline" className="w-full" onClick={() => handleSimulate(token)}>
-                                                <TrendingUp className="h-4 w-4 mr-2" />
-                                                {t("simulate")}
-                                            </Button>
-                                            <Button className="w-full" onClick={() => handleBuy(token)}>
-                                                <ShoppingCart className="h-4 w-4 mr-2" />
-                                                {t("buy")}
-                                            </Button>
+                                        <div>
+                                            <p className="text-sm text-muted-foreground mb-1">{t("fees")}</p>
+                                            <p className="text-sm font-medium">{currentToken.fees}%</p>
                                         </div>
                                     </div>
-                                </CardContent>
-                            </Card>
-                        ))}
+
+                                    <div className="flex flex-col justify-between pt-4 border-t">
+                                        <div className="flex items-center">
+                                            <Users className="h-4 w-4 text-primary dark:text-forestiYellow mr-2" />
+                                            <span className="text-sm">
+                                                {currentToken.buyers} {t("buyers")}
+                                            </span>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <Coins className="h-4 w-4 text-primary dark:text-forestiYellow mr-2" />
+                                            <span className="text-sm">
+                                                {currentToken.tokensSold.toLocaleString()} {t("tokensSold")}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-2 mt-4">
+                                        <Button variant="outline" className="w-full bg-forestiOrange dark:bg-forestiOrange dark:hover:bg-forestiOrange/70 text-white hover:bg-forestiOrange/70 cursor-pointer" onClick={() => handleSimulate(currentToken)}>
+                                            <TrendingUp className="h-4 w-4 mr-2" />
+                                            {t("simulate")}
+                                        </Button>
+                                        <Button className="w-full cursor-pointer dark:bg-forestiGreen dark:hover:bg-forestiGreen/70" onClick={() => handleBuy(currentToken)}>
+                                            <ShoppingCart className="h-4 w-4 mr-2" />
+                                            {t("buy")}
+                                        </Button>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
                     </div>
                 </CardContent>
             </Card>
@@ -269,4 +309,3 @@ export function AvailableTokens() {
         </>
     )
 }
-

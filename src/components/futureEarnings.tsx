@@ -21,7 +21,7 @@ export function FutureEarnings({ investments }: FutureEarningsProps) {
 
     const totalInvested = investments.reduce((sum, inv) => sum + inv.amount, 0)
 
-    // Calculate projected earnings based on growth rate and years
+    // Calcular projeção de dados futuros baseado no valor investido e taxa de crescimento
     const getProjectedData = (baseRate: number) => {
         const data = []
         let currentValue = totalInvested
@@ -44,28 +44,28 @@ export function FutureEarnings({ investments }: FutureEarningsProps) {
         return data
     }
 
-    // Generate different scenarios
+    // Gerar cenários de projeção
     const conservativeData = getProjectedData(growthRate * 0.5) // Half the growth rate
     const moderateData = getProjectedData(growthRate)
     const optimisticData = getProjectedData(growthRate * 1.5) // 1.5x the growth rate
 
-    // Get final values for each scenario
+    // Pegar o valor final de cada cenário
     const conservativeFinal = conservativeData[conservativeData.length - 1].value
     const moderateFinal = moderateData[moderateData.length - 1].value
     const optimisticFinal = optimisticData[optimisticData.length - 1].value
 
-    // Calculate total returns
+    // Calcular o retorno de investimento
     const conservativeReturn = conservativeFinal - totalInvested
     const moderateReturn = moderateFinal - totalInvested
     const optimisticReturn = optimisticFinal - totalInvested
 
-    // Calculate ROI percentages
+    // Calcular porcentagem de retorno de investimento
     const conservativeROI = (conservativeReturn / totalInvested) * 100
     const moderateROI = (moderateReturn / totalInvested) * 100
     const optimisticROI = (optimisticReturn / totalInvested) * 100
 
     return (
-        <Card className="shadow-sm">
+        <Card className="shadow-sm w-full">
             <CardHeader className="pb-2">
                 <CardTitle>{t("futureEarnings", { rate: (growthRate * 0.5).toFixed(1) })}</CardTitle>
                 <CardDescription>{t("futureEarningsDesc", { rate: (growthRate * 0.5).toFixed(1) })}</CardDescription>
@@ -117,12 +117,12 @@ export function FutureEarnings({ investments }: FutureEarningsProps) {
                                 <p className="text-sm text-muted-foreground">
                                     {t("conservativeScenarioDesc", { rate: (growthRate * 0.5).toFixed(1) })}
                                 </p>
-                                <div className="grid grid-cols-2 gap-4 mt-4">
+                                <div className="grid grid-cols-2 gap-4 mt-4 justify-end items-center">
                                     <div>
                                         <p className="text-sm text-muted-foreground">{t("projectedValue", { rate: growthRate.toFixed(1) })}</p>
-                                        <p className="text-2xl font-bold">{formatCurrency(conservativeFinal)}</p>
+                                        <p className="text-2xl font-bold text-forestiOrange">{formatCurrency(conservativeFinal)}</p>
                                     </div>
-                                    <div>
+                                    <div className="flex flex-col items-end">
                                         <p className="text-sm text-muted-foreground">{t("projectedReturn", { rate: (growthRate * 1.5).toFixed(1) })}</p>
                                         <p className="text-2xl font-bold text-green-500">+{formatCurrency(conservativeReturn)}</p>
                                         <p className="text-sm text-green-500">+{conservativeROI.toFixed(2)}%</p>
@@ -139,7 +139,7 @@ export function FutureEarnings({ investments }: FutureEarningsProps) {
                                             formatter={(value: number) => [formatCurrency(value), t("projectedValue", { rate: (growthRate * 0.5).toFixed(1) })]}
                                             labelFormatter={(label) => `${t("year", { rate: (growthRate * 0.5).toFixed(1) })} ${label}`}
                                         />
-                                        <Line type="monotone" dataKey="value" stroke="#10b981" activeDot={{ r: 8 }} />
+                                        <Line type="monotone" dataKey="value" stroke="#F87B36" activeDot={{ r: 8 }} />
                                     </LineChart>
                                 </ResponsiveContainer>
                             </div>
@@ -151,12 +151,12 @@ export function FutureEarnings({ investments }: FutureEarningsProps) {
                                 <p className="text-sm text-muted-foreground">
                                     {t("moderateScenarioDesc", { rate: growthRate.toFixed(1) })}
                                 </p>
-                                <div className="grid grid-cols-2 gap-4 mt-4">
+                                <div className="grid grid-cols-2 gap-4 mt-4 justify-end items-center">
                                     <div>
                                         <p className="text-sm text-muted-foreground">{t("projectedValue", { rate: (growthRate * 0.5).toFixed(1) })}</p>
-                                        <p className="text-2xl font-bold">{formatCurrency(moderateFinal)}</p>
+                                        <p className="text-2xl font-bold text-forestiOrange">{formatCurrency(moderateFinal)}</p>
                                     </div>
-                                    <div>
+                                    <div className="flex flex-col items-end">
                                         <p className="text-sm text-muted-foreground">{t("projectedReturn", { rate: (growthRate * 0.5).toFixed(1) })}</p>
                                         <p className="text-2xl font-bold text-green-500">+{formatCurrency(moderateReturn)}</p>
                                         <p className="text-sm text-green-500">+{moderateROI.toFixed(2)}%</p>
@@ -173,7 +173,7 @@ export function FutureEarnings({ investments }: FutureEarningsProps) {
                                             formatter={(value: number) => [formatCurrency(value), t("projectedValue", { rate: (growthRate * 0.5).toFixed(1) })]}
                                             labelFormatter={(label) => `${t("year", { rate: (growthRate * 0.5).toFixed(1) })} ${label}`}
                                         />
-                                        <Line type="monotone" dataKey="value" stroke="#3b82f6" activeDot={{ r: 8 }} />
+                                        <Line type="monotone" dataKey="value" stroke="#F87B36" activeDot={{ r: 8 }} />
                                     </LineChart>
                                 </ResponsiveContainer>
                             </div>
@@ -185,12 +185,12 @@ export function FutureEarnings({ investments }: FutureEarningsProps) {
                                 <p className="text-sm text-muted-foreground">
                                     {t("optimisticScenarioDesc", { rate: (growthRate * 1.5).toFixed(1) })}
                                 </p>
-                                <div className="grid grid-cols-2 gap-4 mt-4">
+                                <div className="grid grid-cols-2 gap-4 mt-4 justify-end items-center">
                                     <div>
                                         <p className="text-sm text-muted-foreground">{t("projectedValue", { rate: (growthRate * 0.5).toFixed(1) })}</p>
-                                        <p className="text-2xl font-bold">{formatCurrency(optimisticFinal)}</p>
+                                        <p className="text-2xl font-bold text-forestiOrange">{formatCurrency(optimisticFinal)}</p>
                                     </div>
-                                    <div>
+                                    <div className="flex flex-col items-end">
                                         <p className="text-sm text-muted-foreground">{t("projectedReturn", { rate: (growthRate * 0.5).toFixed(1) })}</p>
                                         <p className="text-2xl font-bold text-green-500">+{formatCurrency(optimisticReturn)}</p>
                                         <p className="text-sm text-green-500">+{optimisticROI.toFixed(2)}%</p>
@@ -207,7 +207,7 @@ export function FutureEarnings({ investments }: FutureEarningsProps) {
                                             formatter={(value: number) => [formatCurrency(value), t("projectedValue", { rate: (growthRate * 0.5).toFixed(1) })]}
                                             labelFormatter={(label) => `${t("year", { rate: (growthRate * 0.5).toFixed(1) })} ${label}`}
                                         />
-                                        <Line type="monotone" dataKey="value" stroke="#8b5cf6" activeDot={{ r: 8 }} />
+                                        <Line type="monotone" dataKey="value" stroke="#F87B36" activeDot={{ r: 8 }} />
                                     </LineChart>
                                 </ResponsiveContainer>
                             </div>

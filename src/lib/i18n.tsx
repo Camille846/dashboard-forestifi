@@ -112,6 +112,9 @@ const translations = {
         issuer: "Issuer",
         initialInvestment: "Initial investment",
         carbonCreditDividend: "Carbon credit dividend",
+        initiatingPurchase: "Initiating purchase process...",
+        purchaseDescription: `Congratulations! The purchase of {token} is being processed.`,
+        undo: "Undo",
     },
     pt: {
         loading: "Carregando...",
@@ -221,6 +224,9 @@ const translations = {
         issuer: "Emissor",
         initialInvestment: "Investimento inicial",
         carbonCreditDividend: "Dividendo de crédito de carbono",
+        initiatingPurchase: "Iniciando processo de compra...",
+        purchaseDescription: `Parabéns! A compra de {token} está sendo processada.`,
+        undo: "Desfazer",
     },
 }
 

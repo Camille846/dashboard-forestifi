@@ -121,7 +121,7 @@ export function InvestmentPortfolio({ investments }: InvestmentPortfolioProps) {
                                             <Badge
                                                 className={
                                                     investment.type === "GUA"
-                                                        ? "bg-primary"
+                                                        ? "bg-primary dark:bg-forestiYellow"
                                                         : investment.type === "PIR"
                                                             ? "bg-forestiOrange"
                                                             : investment.type === "CAC"
@@ -139,7 +139,7 @@ export function InvestmentPortfolio({ investments }: InvestmentPortfolioProps) {
                                         </TableCell>
                                         <TableCell className="text-right">{formatCurrency(investment.amount)}</TableCell>
                                         <TableCell className="text-right">{formatCurrency(investment.currentValue)}</TableCell>
-                                        <TableCell className={`text-right ${isPositive ? "text-green-500" : "text-red-500"}`}>
+                                        <TableCell className={`text-right ${isPositive ? "text-primary dark:text-forestiGreen" : "text-forestiOrange"}`}>
                                             {isPositive ? "+" : ""}
                                             {returnPercentage.toFixed(2)}%
                                         </TableCell>
