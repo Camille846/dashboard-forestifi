@@ -12,12 +12,12 @@ export function MobileNav({ setIsOpen }: MobileNavProps) {
     const { t } = useTranslation()
 
     const navItems = [
-        { icon: Home, label: t("dashboard"), href: "#" },
-        { icon: BarChart2, label: t("investments"), href: "#" },
-        { icon: Leaf, label: t("environmentalImpact"), href: "#" },
-        { icon: DollarSign, label: t("transactions"), href: "#" },
-        { icon: Settings, label: t("settings"), href: "#" },
-        { icon: HelpCircle, label: t("help"), href: "#" },
+        { icon: Home, label: t("dashboard", {rate: (growthRate * 0.5).toFixed(1)}), href: "#" },
+        { icon: BarChart2, label: t("investments", {rate: (growthRate * 0.5).toFixed(1)}), href: "#" },
+        { icon: Leaf, label: t("environmentalImpact", {rate: (growthRate * 0.5).toFixed(1)}), href: "#" },
+        { icon: DollarSign, label: t("transactions", {rate: (growthRate * 0.5).toFixed(1)}), href: "#" },
+        { icon: Settings, label: t("settings", {rate: (growthRate * 0.5).toFixed(1)}), href: "#" },
+        { icon: HelpCircle, label: t("help", {rate: (growthRate * 0.5).toFixed(1)}), href: "#" },
     ]
 
     return (
@@ -26,7 +26,7 @@ export function MobileNav({ setIsOpen }: MobileNavProps) {
                 <div className="h-8 w-8 rounded-full bg-green-600 flex items-center justify-center mr-2">
                     <span className="text-white font-bold text-sm">EA</span>
                 </div>
-                <h2 className="text-lg font-bold">{t("forestifi")}</h2>
+                <h2 className="text-lg font-bold">{t("forestifi", {rate: (growthRate * 0.5).toFixed(1)})}</h2>
             </div>
 
             <nav className="flex-1 py-4">
@@ -45,7 +45,7 @@ export function MobileNav({ setIsOpen }: MobileNavProps) {
             <div className="border-t py-4">
                 <Button variant="ghost" className="w-full justify-start text-red-500">
                     <LogOut className="mr-2 h-4 w-4" />
-                    {t("logout")}
+                    {t("logout", {rate: (growthRate * 0.5).toFixed(1)})}
                 </Button>
             </div>
         </div>

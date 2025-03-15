@@ -1,126 +1,97 @@
 "use client"
 
-import React, { useState } from "react";
-import type { EnvironmentalImpact } from "@/lib/types";
-import { useTranslation } from "@/lib/i18n";
-import { PieChart, Pie, Sector, ResponsiveContainer, Legend, Tooltip, Cell } from "@/components/ui/chart";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import type { EnvironmentalImpact } from "@/lib/types"
+import { useTranslation } from "@/lib/i18n"
 
-interface EnvironmentalImpactChartProps {
-    impact: EnvironmentalImpact;
+interface EnvironmentalImpactSectionProps {
+    impact: EnvironmentalImpact | null
 }
 
-interface RenderActiveShapeProps {
-    cx: number;
-    cy: number;
-    midAngle: number;
-    innerRadius: number;
-    outerRadius: number;
-    startAngle: number;
-    endAngle: number;
-    fill: string;
-    payload: { name: string };
-    percent: number;
-    value: number;
-}
+export function EnvironmentalImpactSection({ impact }: EnvironmentalImpactSectionProps) {
+    const { t } = useTranslation()
 
-const renderActiveShape = (props: RenderActiveShapeProps) => {
-    const RADIAN = Math.PI / 180;
-    const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, percent, value } = props;
-    const sin = Math.sin(-RADIAN * midAngle);
-    const cos = Math.cos(-RADIAN * midAngle);
-    const sx = cx + (outerRadius + 10) * cos;
-    const sy = cy + (outerRadius + 10) * sin;
-    const mx = cx + (outerRadius + 30) * cos;
-    const my = cy + (outerRadius + 30) * sin;
-    const ex = mx + (cos >= 0 ? 1 : -1) * 22;
-    const ey = my;
-    const textAnchor = cos >= 0 ? "start" : "end";
+    if (!impact) return null
+
+    const { co2Reduction, familiesBenefited, hectaresPreserved } = impact
 
     return (
-        <g>
-            <Sector
-                cx={cx}
-                cy={cy}
-                innerRadius={innerRadius}
-                outerRadius={outerRadius}
-                startAngle={startAngle}
-                endAngle={endAngle}
-                fill={fill}
-            />
-            <Sector
-                cx={cx}
-                cy={cy}
-                startAngle={startAngle}
-                endAngle={endAngle}
-                innerRadius={outerRadius + 6}
-                outerRadius={outerRadius + 10}
-                fill={fill}
-            />
-            <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
-            <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-            <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`${value}`}</text>
-            <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
-                {`(${(percent * 100).toFixed(2)}%)`}
-            </text>
-        </g>
-    );
-};
+        <Card className="shadow-sm">
+            <CardHeader className="pb-2">
+                <CardTitle>{t("environmentalImpact", {rate: (growthRate * 0.5).toFixed(1)})}</CardTitle>
+                <CardDescription>{t("yourPositiveImpact", {rate: (growthRate * 0.5).toFixed(1)})}</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <div className="relative h-[300px] w-full">
+                    <svg viewBox="0 0 400 300" className="w-full h-full" style={{ filter: "blur(30px)" }}>
+                        <defs>
+                            {/* Gradients for each blob */}
+                            <radialGradient id="gradient1" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                <stop offset="0%" stopColor="#10b981" stopOpacity="0.3" />
+                                <stop offset="100%" stopColor="#10b981" stopOpacity="0.1" />
+                            </radialGradient>
+                            <radialGradient id="gradient2" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.3" />
+                                <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.1" />
+                            </radialGradient>
+                            <radialGradient id="gradient3" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.3" />
+                                <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.1" />
+                            </radialGradient>
+                        </defs>
 
-export function EnvironmentalImpactChart({ impact }: EnvironmentalImpactChartProps) {
-    const { t } = useTranslation();
-    const [activeIndex, setActiveIndex] = useState(0);
+                        {/* Background blobs */}
+                        <circle cx="200" cy="150" r="120" fill="url(#gradient1)" />
+                        <circle cx="160" cy="180" r="100" fill="url(#gradient2)" />
+                        <circle cx="240" cy="140" r="90" fill="url(#gradient3)" />
+                    </svg>
 
-    const data = [
-        { name: t("co2Reduction"), value: (impact.co2Reduction) },
-        { name: t("familiesBenefited"), value: (impact.familiesBenefited) },
-        { name: t("hectaresPreserved"), value: (impact.hectaresPreserved) },
-    ];
+                    {/* Overlay content */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="relative w-full h-full">
+                            {/* CO2 Reduction */}
+                            <div className="absolute left-1/2 top-1/4 -translate-x-1/2 -translate-y-1/2 text-center">
+                                <div className="bg-white/90 dark:bg-gray-800/90 rounded-full p-4 shadow-lg">
+                                    <div className="text-2xl font-bold text-green-600">{co2Reduction}</div>
+                                    <div className="text-xs text-muted-foreground">{t("tons", {rate: (growthRate * 0.5).toFixed(1)})} CO₂</div>
+                                </div>
+                            </div>
 
-    const COLORS = ["#78D484", "#2D4F4A", "#F87B36"];
+                            {/* Hectares Preserved */}
+                            <div className="absolute left-1/4 top-2/3 -translate-x-1/2 -translate-y-1/2 text-center">
+                                <div className="bg-white/90 dark:bg-gray-800/90 rounded-full p-4 shadow-lg">
+                                    <div className="text-2xl font-bold text-blue-600">{hectaresPreserved}</div>
+                                    <div className="text-xs text-muted-foreground">ha</div>
+                                </div>
+                            </div>
 
-    const onPieEnter = (_: unknown, index: number) => {
-        setActiveIndex(index);
-    };
+                            {/* Families Benefited */}
+                            <div className="absolute right-1/4 top-2/3 translate-x-1/2 -translate-y-1/2 text-center">
+                                <div className="bg-white/90 dark:bg-gray-800/90 rounded-full p-4 shadow-lg">
+                                    <div className="text-2xl font-bold text-purple-600">{familiesBenefited}</div>
+                                    <div className="text-xs text-muted-foreground">{t("families", {rate: (growthRate * 0.5).toFixed(1)})}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    return (
-        <div className="w-full h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                    <Pie
-                        activeIndex={activeIndex}
-                        activeShape={renderActiveShape as unknown as (props: unknown) => React.JSX.Element}
-                        data={data}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={60}
-                        outerRadius={80}
-                        fill="#8884d8"
-                        dataKey="value"
-                        onMouseEnter={onPieEnter}
-                    >
-                        {data.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                    </Pie>
-                    <Tooltip
-                        wrapperStyle={{
-                            borderRadius: '8px',
-                            backgroundColor: '#ffffff',
-                            boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-                            padding: '10px',
-                            border: 'none',
-                            outline: 'none',
-                        }}
-                        formatter={(value: number, name: string) => {
-                            if (name === t("co2Reduction")) return [`${(value).toLocaleString()} ${t("tons")}`, name];
-                            if (name === t("familiesBenefited")) return [`${(value).toLocaleString()}`, name];
-                            if (name === t("hectaresPreserved")) return [`${(value).toLocaleString()} ha`, name];
-                            return [value, name];
-                        }}
-                    />
-                    <Legend wrapperStyle={{ textAlign: "left", justifyContent: "end", alignItems: "end", display: "flex", flexDirection: "row", flexWrap: "wrap" }} />
-                </PieChart>
-            </ResponsiveContainer>
-        </div>
-    );
+                <div className="grid grid-cols-3 gap-4 mt-6">
+                    <div className="text-center">
+                        <div className="text-sm font-medium text-green-600">{t("co2Reduction", {rate: (growthRate * 0.5).toFixed(1)})}</div>
+                        <div className="text-xs text-muted-foreground">{t("environmentalMetric1", {rate: (growthRate * 0.5).toFixed(1)})}</div>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-sm font-medium text-blue-600">{t("hectaresPreserved", {rate: (growthRate * 0.5).toFixed(1)})}</div>
+                        <div className="text-xs text-muted-foreground">{t("environmentalMetric2", {rate: (growthRate * 0.5).toFixed(1)})}</div>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-sm font-medium text-purple-600">{t("familiesBenefited", {rate: (growthRate * 0.5).toFixed(1)})}</div>
+                        <div className="text-xs text-muted-foreground">{t("environmentalMetric3", {rate: (growthRate * 0.5).toFixed(1)})}</div>
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
+    )
 }
+

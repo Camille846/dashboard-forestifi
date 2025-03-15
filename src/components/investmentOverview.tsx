@@ -15,6 +15,7 @@ interface InvestmentOverviewProps {
 
 export function InvestmentOverview({ investments }: InvestmentOverviewProps) {
     const { t } = useTranslation()
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [timeframe, setTimeframe] = useState("month")
 
     const totalInvested = investments.reduce((sum, inv) => sum + inv.amount, 0)
@@ -33,57 +34,57 @@ export function InvestmentOverview({ investments }: InvestmentOverviewProps) {
             </CardHeader>
             <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                    <Card className="bg-primary">
+                    <Card>
                         <CardContent className="p-4">
-                            <div className="flex items-center justify-between ">
+                            <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-white">{t("totalInvested")}</p>
-                                    <h3 className="text-2xl font-bold text-white">{formatCurrency(totalInvested)}</h3>
+                                    <p className="text-sm text-muted-foreground">{t("totalInvested")}</p>
+                                    <h3 className="text-2xl font-bold">{formatCurrency(totalInvested)}</h3>
                                 </div>
-                                <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center">
-                                    <DollarSign className="h-5 w-5 text-forestiYellow" />
+                                <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                                    <DollarSign className="h-5 w-5 text-primary" />
                                 </div>
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card className="bg-primary">
+                    <Card>
                         <CardContent className="p-4">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-white">{t("totalReturn")}</p>
-                                    <h3 className="text-2xl font-bold flex items-center text-white">
+                                    <p className="text-sm text-muted-foreground">{t("totalReturn")}</p>
+                                    <h3 className="text-2xl font-bold flex items-center">
                                         {formatCurrency(totalReturn)}
                                         {isPositiveReturn ? (
-                                            <ArrowUpRight className="h-4 w-4 text-forestiGreen ml-1" />
+                                            <ArrowUpRight className="h-4 w-4 text-green-500 ml-1" />
                                         ) : (
                                             <ArrowDownRight className="h-4 w-4 text-red-500 ml-1" />
                                         )}
                                     </h3>
-                                    <p className={`text-xs ${isPositiveReturn ? "text-forestiGreen" : "text-red-500"}`}>
+                                    <p className={`text-xs ${isPositiveReturn ? "text-green-500" : "text-red-500"}`}>
                                         {returnPercentage.toFixed(2)}%
                                     </p>
                                 </div>
                                 <div
-                                    className={`h-10 w-10 rounded-full ${isPositiveReturn ? "bg-white/10" : "bg-forestiOrange"} flex items-center justify-center`}
+                                    className={`h-10 w-10 rounded-full ${isPositiveReturn ? "bg-green-500/10" : "bg-red-500/10"} flex items-center justify-center`}
                                 >
-                                    <TrendingUp className={`h-5 w-5 ${isPositiveReturn ? "text-forestiYellow" : "text-forestiOrange"}`} />
+                                    <TrendingUp className={`h-5 w-5 ${isPositiveReturn ? "text-green-500" : "text-red-500"}`} />
                                 </div>
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card className="bg-primary">
+                    <Card>
                         <CardContent className="p-4">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-white">{t("carbonCredits")}</p>
-                                    <h3 className="text-2xl font-bold text-white">{totalCarbonCredits.toLocaleString()}</h3>
-                                    <p className="text-xs text-forestiGreen">{t("tonsCO2Offset")}</p>
+                                    <p className="text-sm text-muted-foreground">{t("carbonCredits")}</p>
+                                    <h3 className="text-2xl font-bold">{totalCarbonCredits.toLocaleString()}</h3>
+                                    <p className="text-xs text-green-500">{t("tonsCO2Offset")}</p>
                                 </div>
-                                <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center">
+                                <div className="h-10 w-10 rounded-full bg-green-500/10 flex items-center justify-center">
                                     <svg
-                                        className="h-5 w-5 text-forestiYellow"
+                                        className="h-5 w-5 text-green-500"
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         xmlns="http://www.w3.org/2000/svg"

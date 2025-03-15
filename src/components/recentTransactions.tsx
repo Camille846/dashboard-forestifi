@@ -28,11 +28,11 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
                             <div key={transaction.id} className="flex items-center justify-between border-b pb-3 last:border-0">
                                 <div className="flex items-center">
                                     <div
-                                        className={`h-8 w-8 rounded-full ${transaction.type === "buy" ? "bg-forestiGreen" : "bg-blue-500/10"} flex items-center justify-center mr-3`}
+                                        className={`h-8 w-8 rounded-full ${transaction.type === "buy" ? "bg-green-500/10" : "bg-blue-500/10"} flex items-center justify-center mr-3`}
                                     >
                                         {transaction.type === "buy" ? (
                                             <svg
-                                                className="h-4 w-4 text-forestiGreen"
+                                                className="h-4 w-4 text-green-500"
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +68,7 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
                                     </div>
                                 </div>
                                 <div
-                                    className={`text-sm font-medium ${transaction.type === "buy" ? "text-forestiGreen" : "text-blue-500"}`}
+                                    className={`text-sm font-medium ${transaction.type === "buy" ? "text-green-500" : "text-blue-500"}`}
                                 >
                                     {transaction.type === "buy" ? "+" : ""}
                                     {formatCurrency(transaction.amount)}

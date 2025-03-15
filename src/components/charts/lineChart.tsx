@@ -75,24 +75,24 @@ export function InvestmentChart({ timeframe, investments }: InvestmentChartProps
                             if (timeframe === "week") {
                                 return date.toLocaleDateString(undefined, { weekday: "short" })
                             } else if (timeframe === "month") {
-                                return date.toLocaleDateString(undefined, { day: "numeric", month: "numeric" })
+                                return date.toLocaleDateString(undefined, { day: "numeric", month: "short" })
                             } else {
-                                return date.toLocaleDateString(undefined, { month: "short", year: "numeric" })
+                                return date.toLocaleDateString(undefined, { month: "short", year: "2-digit" })
                             }
                         }}
                     />
                     <YAxis
                         domain={[minValue, maxValue]}
                         tick={{ fontSize: 12 }}
-                        tickFormatter={(value) => `R$${(value / 1000).toFixed(0)}k`}
+                        tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
                     />
                     <Tooltip
-                        formatter={(value: number) => [`R$${value.toFixed(2)}`, t("portfolioValue")]}
+                        formatter={(value: number) => [`$${value.toFixed(2)}`, t("portfolioValue")]}
                         labelFormatter={(label) => {
                             const date = new Date(label)
                             return date.toLocaleDateString(undefined, {
                                 year: "numeric",
-                                month: "numeric",
+                                month: "long",
                                 day: "numeric",
                             })
                         }}
@@ -102,7 +102,7 @@ export function InvestmentChart({ timeframe, investments }: InvestmentChartProps
                         type="monotone"
                         dataKey="value"
                         name={t("portfolioValue")}
-                        stroke="#78D484"
+                        stroke="#10b981"
                         strokeWidth={2}
                         dot={false}
                         activeDot={{ r: 6 }}

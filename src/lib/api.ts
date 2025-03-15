@@ -107,7 +107,7 @@ export async function fetchEnvironmentalImpact(): Promise<EnvironmentalImpact> {
     // Return mock data
     return {
         co2Reduction: 352,
-        familiesBenefited: 500,
+        familiesBenefited: 28,
         waterConservation: 12500,
         hectaresPreserved: 50,
         historicalData: [
