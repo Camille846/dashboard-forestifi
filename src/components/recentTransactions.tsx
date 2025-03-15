@@ -1,6 +1,8 @@
+"use client";
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import type { Transaction } from "@/lib/types"
-import { formatCurrency, formatDate } from "@/lib/utils"
+import { formatCurrency, formatDateLocale } from "@/lib/utils"
 import { useTranslation } from "@/lib/i18n"
 
 interface RecentTransactionsProps {
@@ -8,15 +10,15 @@ interface RecentTransactionsProps {
 }
 
 export function RecentTransactions({ transactions }: RecentTransactionsProps) {
-    const { t } = useTranslation()
+    const { t, locale } = useTranslation()
 
-    // Sort transactions by date (newest first)
+    // Ordenar as transações por data e pegar as 05 mais recentes
     const sortedTransactions = [...transactions]
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-        .slice(0, 5) // Show only the 5 most recent transactions
+        .slice(0, 5) // mostrar apenas as 05 transações mais recentes
 
     return (
-        <Card className="shadow-sm">
+        <Card className="shadow-sm w-full card">
             <CardHeader className="pb-2">
                 <CardTitle>{t("recentTransactions")}</CardTitle>
                 <CardDescription>{t("latestActivity")}</CardDescription>
@@ -64,7 +66,7 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
                                     </div>
                                     <div>
                                         <p className="text-sm font-medium">{transaction.description}</p>
-                                        <p className="text-xs text-muted-foreground">{formatDate(transaction.date)}</p>
+                                        <p className="text-xs text-muted-foreground">{formatDateLocale(transaction.date, locale)}</p>
                                     </div>
                                 </div>
                                 <div
@@ -83,4 +85,3 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
         </Card>
     )
 }
-

@@ -6,7 +6,7 @@ const BRSonoma = localFont({ src: '../../public/fonts/BRSonoma-Regular.otf' })
 
 export default function Home() {
     return (
-        <main className={`${BRSonoma.className} min-h-screen`}>
+        <main className={`${BRSonoma.className}`}>
             <Suspense fallback={<Loading />}></Suspense>
         </main>
     )

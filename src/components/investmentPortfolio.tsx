@@ -5,15 +5,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import type { Investment } from "@/lib/types"
-import { formatCurrency, formatDate } from "@/lib/utils"
+import { formatCurrency, formatDateLocale } from "@/lib/utils"
 import { useTranslation } from "@/lib/i18n"
+import {Avatar, AvatarImage} from "@/components/ui/avatar"
 
 interface InvestmentPortfolioProps {
     investments: Investment[]
 }
 
 export function InvestmentPortfolio({ investments }: InvestmentPortfolioProps) {
-    const { t } = useTranslation()
+    const { t, locale } = useTranslation()
     const [sortBy, setSortBy] = useState<string>("name")
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc")
 
@@ -36,6 +37,9 @@ export function InvestmentPortfolio({ investments }: InvestmentPortfolioProps) {
             case "type":
                 comparison = a.type.localeCompare(b.type)
                 break
+            case "issuer":
+                comparison = a.issuer.localeCompare(b.issuer)
+                break
             case "amount":
                 comparison = a.amount - b.amount
                 break
@@ -57,8 +61,21 @@ export function InvestmentPortfolio({ investments }: InvestmentPortfolioProps) {
         return sortOrder === "asc" ? comparison : -comparison
     })
 
+    const getLogoSrc = (type: string) => {
+        switch (type) {
+            case "GUA":
+                return "/logoGua.png"
+            case "PIR":
+                return "/logoPir.jpg"
+            case "CAC":
+                return "/logoCac.png"
+            default:
+                return ""
+        }
+    }
+
     return (
-        <Card className="shadow-sm">
+        <Card className="shadow-sm w-full card">
             <CardHeader className="pb-2">
                 <CardTitle>{t("investmentPortfolio")}</CardTitle>
                 <CardDescription>{t("yourNaturalAssets")}</CardDescription>
@@ -73,6 +90,9 @@ export function InvestmentPortfolio({ investments }: InvestmentPortfolioProps) {
                                 </TableHead>
                                 <TableHead className="cursor-pointer" onClick={() => handleSort("type")}>
                                     {t("type")} {sortBy === "type" && (sortOrder === "asc" ? "↑" : "↓")}
+                                </TableHead>
+                                <TableHead className="cursor-pointer" onClick={() => handleSort("issuer")}>
+                                    {t("issuer")} {sortBy === "issuer" && (sortOrder === "asc" ? "↑" : "↓")}
                                 </TableHead>
                                 <TableHead className="cursor-pointer text-right" onClick={() => handleSort("amount")}>
                                     {t("invested")} {sortBy === "amount" && (sortOrder === "asc" ? "↑" : "↓")}
@@ -99,16 +119,23 @@ export function InvestmentPortfolio({ investments }: InvestmentPortfolioProps) {
                                         <TableCell className="font-medium">{investment.name}</TableCell>
                                         <TableCell>
                                             <Badge
-                                                variant={
-                                                    investment.type === "Forest"
-                                                        ? "default"
-                                                        : investment.type === "Water"
-                                                            ? "secondary"
-                                                            : "outline"
+                                                className={
+                                                    investment.type === "GUA"
+                                                        ? "bg-primary"
+                                                        : investment.type === "PIR"
+                                                            ? "bg-forestiOrange"
+                                                            : investment.type === "CAC"
+                                                                ? "bg-forestiGreen"
+                                                                : ""
                                                 }
                                             >
                                                 {investment.type}
                                             </Badge>
+                                        </TableCell>
+                                        <TableCell className="flex items-center justify-center">
+                                            <Avatar className="border-2 border-primary">
+                                                <AvatarImage src={getLogoSrc(investment.type)} alt={investment.issuer} />
+                                            </Avatar>
                                         </TableCell>
                                         <TableCell className="text-right">{formatCurrency(investment.amount)}</TableCell>
                                         <TableCell className="text-right">{formatCurrency(investment.currentValue)}</TableCell>
@@ -116,7 +143,7 @@ export function InvestmentPortfolio({ investments }: InvestmentPortfolioProps) {
                                             {isPositive ? "+" : ""}
                                             {returnPercentage.toFixed(2)}%
                                         </TableCell>
-                                        <TableCell className="text-right">{formatDate(investment.purchaseDate)}</TableCell>
+                                        <TableCell className="text-right">{formatDateLocale(investment.purchaseDate, locale)}</TableCell>
                                     </TableRow>
                                 )
                             })}
@@ -127,4 +154,3 @@ export function InvestmentPortfolio({ investments }: InvestmentPortfolioProps) {
         </Card>
     )
 }
-

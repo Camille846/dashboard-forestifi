@@ -109,6 +109,9 @@ const translations = {
         environmentalMetric1: "Total CO₂ reduction achieved",
         environmentalMetric2: "Amazon rainforest area preserved",
         environmentalMetric3: "Local families supported",
+        issuer: "Issuer",
+        initialInvestment: "Initial investment",
+        carbonCreditDividend: "Carbon credit dividend",
     },
     pt: {
         loading: "Carregando...",
@@ -215,6 +218,9 @@ const translations = {
         environmentalMetric1: "Redução total de CO₂ alcançada",
         environmentalMetric2: "Área preservada da floresta amazônica",
         environmentalMetric3: "Famílias locais apoiadas",
+        issuer: "Emissor",
+        initialInvestment: "Investimento inicial",
+        carbonCreditDividend: "Dividendo de crédito de carbono",
     },
 }
 

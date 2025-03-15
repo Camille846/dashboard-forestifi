@@ -1,10 +1,11 @@
 export interface Investment {
     id: string
     name: string
-    type: "Forest" | "Water" | "Biodiversity"
+    type: "GUA" | "PIR" | "CAC"
+    issuer: string
     amount: number
     currentValue: number
-    purchaseDate: string
+    purchaseDate: Date
     location: string
     carbonCredits: number
     transactions?: Transaction[]
@@ -14,7 +15,7 @@ export interface Transaction {
     id: string
     description: string
     amount: number
-    date: string
+    date: Date
     type: "buy" | "dividend" | "sell"
 }
 
