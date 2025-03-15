@@ -133,7 +133,7 @@ export function InvestmentPortfolio({ investments }: InvestmentPortfolioProps) {
                                             </Badge>
                                         </TableCell>
                                         <TableCell className="flex items-center justify-center">
-                                            <Avatar className="border-2 border-primary">
+                                            <Avatar className="border-2 border-">
                                                 <AvatarImage src={getLogoSrc(investment.type)} alt={investment.issuer} />
                                             </Avatar>
                                         </TableCell>

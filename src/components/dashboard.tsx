@@ -103,14 +103,14 @@ export default function Dashboard() {
                 )
             case "portfolio":
                 return (
-                    <div className="flex gap-5 justify-center w-[85vw]">
+                    <div className="flex flex-col lg:flex-row gap-5 justify-center lg:w-[85vw]">
                         <InvestmentPortfolio investments={filteredInvestments} />
                         <RecentTransactions transactions={filteredInvestments.flatMap((inv) => inv.transactions || [])} />
                     </div>
                 )
             case "earnings":
                 return (
-                    <div className="flex gap-5 justify-center w-[85vw]">
+                    <div className="flex flex-col lg:flex-row gap-5 justify-center lg:w-[85vw]">
                         <FutureEarnings investments={filteredInvestments} />
                         <AvailableTokens />
                     </div>
