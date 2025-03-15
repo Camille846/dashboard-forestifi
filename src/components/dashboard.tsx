@@ -1,6 +1,5 @@
 "use client"
-
-import { useEffect, useState } from "react"
+import { useState, useEffect } from "react"
 import { useTheme } from "next-themes"
 import { fetchInvestments, fetchEnvironmentalImpact } from "@/lib/api"
 import type { Investment, EnvironmentalImpact } from "@/lib/types"
@@ -13,16 +12,18 @@ import { useTranslation } from "@/lib/i18n"
 import { TokenFilter } from "@/components/tokenFilter"
 import { AvailableTokens } from "@/components/availableTokens"
 import { FutureEarnings } from "@/components/futureEarnings"
-import Loading from "@/components/ui/loading";
-
+import Loading from "@/components/ui/loading"
+import { AppSidebar } from "@/components/sidebar"
 
 export default function Dashboard() {
     const [investments, setInvestments] = useState<Investment[]>([])
     const [filteredInvestments, setFilteredInvestments] = useState<Investment[]>([])
     const [environmentalImpact, setEnvironmentalImpact] = useState<EnvironmentalImpact | null>(null)
     const [isLoading, setIsLoading] = useState(true)
+    const [selectedComponent, setSelectedComponent] = useState<string>("overview")
     const { theme, setTheme } = useTheme()
-    const { t, locale, setLocale } = useTranslation()
+    const { locale, setLocale } = useTranslation()
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
     useEffect(() => {
         const loadData = async () => {
@@ -56,11 +57,27 @@ export default function Dashboard() {
         if (selectedTokens.length === 0) {
             setFilteredInvestments(investments)
         } else {
-            // This is a mock implementation since we don't have token types in our current data model
-            // In a real implementation, you would filter based on the token type of each investment
             const filtered = investments.filter((_, index) => {
-                // Just for demonstration, we'll use the index to simulate different token types
-                const mockTokenType = index === 0 ? "pirarucu" : index === 1 ? "guarana" : index === 2 ? "apoena" : "acai"
+                let mockTokenType: string
+                switch (index) {
+                    case 0:
+                        mockTokenType = "gua1"
+                        break
+                    case 1:
+                        mockTokenType = "gua2"
+                        break
+                    case 2:
+                        mockTokenType = "pir1"
+                        break
+                    case 3:
+                        mockTokenType = "pir2"
+                        break
+                    case 4:
+                        mockTokenType = "cac1"
+                        break
+                    default:
+                        mockTokenType = "gua1"
+                }
                 return selectedTokens.includes(mockTokenType)
             })
             setFilteredInvestments(filtered)
@@ -75,46 +92,53 @@ export default function Dashboard() {
         )
     }
 
+    const renderComponent = () => {
+        switch (selectedComponent) {
+            case "overview":
+                return (
+                    <div className="flex flex-col lg:flex-row gap-5 justify-center lg:w-[85vw]">
+                        <InvestmentOverview investments={filteredInvestments} />
+                        <EnvironmentalImpactSection impact={environmentalImpact} />
+                    </div>
+                )
+            case "portfolio":
+                return (
+                    <div className="flex gap-5 justify-center w-[85vw]">
+                        <InvestmentPortfolio investments={filteredInvestments} />
+                        <RecentTransactions transactions={filteredInvestments.flatMap((inv) => inv.transactions || [])} />
+                    </div>
+                )
+            case "earnings":
+                return (
+                    <div className="flex gap-5 justify-center w-[85vw]">
+                        <FutureEarnings investments={filteredInvestments} />
+                        <AvailableTokens />
+                    </div>
+                )
+            default:
+                return <InvestmentOverview investments={filteredInvestments} />
+        }
+    }
+
     return (
-        <div className="container mx-auto px-4 py-8">
-            <DashboardHeader
-                toggleTheme={toggleTheme}
-                currentTheme={theme || "light"}
-                toggleLanguage={toggleLanguage}
-                currentLanguage={locale}
-            />
-
-            <div className="mt-6">
-                <TokenFilter onFilterChange={handleTokenFilterChange} />
-            </div>
-
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
-                <div className="lg:col-span-2">
-                    <InvestmentOverview investments={filteredInvestments} />
+        <div className="flex">
+            <AppSidebar setSelectedComponent={setSelectedComponent} isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
+            <div className="flex-1">
+                <DashboardHeader
+                    toggleTheme={toggleTheme}
+                    currentTheme={theme || "light"}
+                    toggleLanguage={toggleLanguage}
+                    currentLanguage={locale}
+                />
+                <div className="container mx-4 px-4">
+                    <div className="mt-6">
+                        <TokenFilter onFilterChange={handleTokenFilterChange} />
+                    </div>
+                    <div className="mt-8">
+                        {renderComponent()}
+                    </div>
                 </div>
-                <div>
-                    <EnvironmentalImpactSection impact={environmentalImpact} />
-                </div>
-            </div>
-
-            <div className="mt-8">
-                <AvailableTokens />
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
-                <div className="lg:col-span-2">
-                    <InvestmentPortfolio investments={filteredInvestments} />
-                </div>
-                <div>
-                    <RecentTransactions transactions={filteredInvestments.flatMap((inv) => inv.transactions || [])} />
-                </div>
-            </div>
-
-            <div className="mt-8">
-                <FutureEarnings investments={filteredInvestments} />
             </div>
         </div>
     )
 }
-

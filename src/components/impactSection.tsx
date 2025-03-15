@@ -16,7 +16,7 @@ export function EnvironmentalImpactSection({ impact }: EnvironmentalImpactSectio
     const { co2Reduction, familiesBenefited, hectaresPreserved } = impact
 
     return (
-        <Card className="shadow-sm">
+        <Card className="shadow-sm lg:w-[30%] card dark:bg-primary">
             <CardHeader className="pb-2">
                 <CardTitle>{t("environmentalImpact")}</CardTitle>
                 <CardDescription>{t("yourPositiveImpact")}</CardDescription>
@@ -25,7 +25,7 @@ export function EnvironmentalImpactSection({ impact }: EnvironmentalImpactSectio
                 <div className="relative h-[300px] w-full">
                     <svg viewBox="0 0 400 300" className="w-full h-full" style={{ filter: "blur(30px)" }}>
                         <defs>
-                            {/* Gradients for each blob */}
+                            {/* Gradients */}
                             <radialGradient id="gradient1" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
                                 <stop offset="0%" stopColor="#2D4F4A" stopOpacity="0.3" />
                                 <stop offset="100%" stopColor="#2D4F4A" stopOpacity="0.1" />
@@ -46,7 +46,7 @@ export function EnvironmentalImpactSection({ impact }: EnvironmentalImpactSectio
                         <circle cx="240" cy="140" r="120" fill="url(#gradient3)" />
                     </svg>
 
-                    {/* Overlay content */}
+                    {/* Overlay */}
                     <div className="absolute left-1/2 top-1/4 -translate-x-1/2 -translate-y-1/2 text-center">
                         <div className="bg-forestiYellow rounded-full p-6 shadow-lg w-32 h-32 flex flex-col items-center justify-center">
                             <div className="text-2xl font-bold text-primary">{co2Reduction}</div>
@@ -57,7 +57,7 @@ export function EnvironmentalImpactSection({ impact }: EnvironmentalImpactSectio
                     <div className="absolute left-1/4 top-2/3 -translate-x-1/2 -translate-y-1/2 text-center">
                         <div className="bg-primary dark:bg-forestiGreen rounded-full p-4 shadow-lg w-32 h-32 flex flex-col items-center justify-center">
                             <div className="text-2xl font-bold text-white dark:text-primary">{hectaresPreserved}</div>
-                            <div className="text-xs text-white">ha</div>
+                            <div className="text-xs text-white">hectares</div>
                         </div>
                     </div>
 

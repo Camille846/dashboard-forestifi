@@ -22,9 +22,9 @@ interface InvestmentChartProps {
 
 export function InvestmentChart({ timeframe, investments }: InvestmentChartProps) {
     const { theme } = useTheme()
-    const { t } = useTranslation()
+    const { t, locale } = useTranslation()
 
-    // Generate mock chart data based on timeframe
+    // mock chart data baseado na timeframe
     const chartData = useMemo(() => {
         const now = new Date()
         const data = []
@@ -34,14 +34,13 @@ export function InvestmentChart({ timeframe, investments }: InvestmentChartProps
         if (timeframe === "year") days = 365
         if (timeframe === "all") days = 730
 
-        // Generate data points
+        // Gerar dados para cada dia
         for (let i = days; i >= 0; i--) {
             const date = new Date(now)
             date.setDate(date.getDate() - i)
 
-            // Create some random fluctuation for the mock data
+            // Criar dados de investimento
             const totalValue = investments.reduce((sum, inv) => {
-                // Create a unique but deterministic fluctuation for each investment
                 const fluctuation = Math.sin(date.getTime() / 1000000 + inv.id.charCodeAt(0)) * 0.1
                 return sum + inv.amount * (1 + fluctuation)
             }, 0)
@@ -55,7 +54,7 @@ export function InvestmentChart({ timeframe, investments }: InvestmentChartProps
         return data
     }, [timeframe, investments])
 
-    // Calculate the domain for the Y axis
+    // Calcular valores mínimos e máximos para o eixo Y
     const minValue = Math.min(...chartData.map((d) => d.value)) * 0.95
     const maxValue = Math.max(...chartData.map((d) => d.value)) * 1.05
 
@@ -73,21 +72,21 @@ export function InvestmentChart({ timeframe, investments }: InvestmentChartProps
                         tickFormatter={(value) => {
                             const date = new Date(value)
                             if (timeframe === "week") {
-                                return date.toLocaleDateString(undefined, { weekday: "short" })
+                                return date.toLocaleDateString(locale, { weekday: "short" })
                             } else if (timeframe === "month") {
-                                return date.toLocaleDateString(undefined, { day: "numeric", month: "short" })
+                                return date.toLocaleDateString(locale, { day: "numeric", month: "short" })
                             } else {
-                                return date.toLocaleDateString(undefined, { month: "short", year: "2-digit" })
+                                return date.toLocaleDateString(locale, { month: "short", year: "2-digit" })
                             }
                         }}
                     />
                     <YAxis
                         domain={[minValue, maxValue]}
                         tick={{ fontSize: 12 }}
-                        tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+                        tickFormatter={(value) => `R$${(value / 1000).toFixed(0)}k`}
                     />
                     <Tooltip
-                        formatter={(value: number) => [`$${value.toFixed(2)}`, t("portfolioValue")]}
+                        formatter={(value: number) => [`R$${value.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, t("portfolioValue")]}
                         labelFormatter={(label) => {
                             const date = new Date(label)
                             return date.toLocaleDateString(undefined, {
@@ -112,4 +111,3 @@ export function InvestmentChart({ timeframe, investments }: InvestmentChartProps
         </div>
     )
 }
-

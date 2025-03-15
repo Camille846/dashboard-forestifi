@@ -23,11 +23,10 @@ export function InvestmentOverview({ investments }: InvestmentOverviewProps) {
     const returnPercentage = (totalReturn / totalInvested) * 100
     const isPositiveReturn = totalReturn >= 0
 
-    // Calculate total carbon credits
     const totalCarbonCredits = investments.reduce((sum, inv) => sum + (inv.carbonCredits || 0), 0)
 
     return (
-        <Card className="shadow-sm">
+        <Card className="shadow-sm lg:w-[75%]">
             <CardHeader className="pb-2">
                 <CardTitle>{t("investmentOverview")}</CardTitle>
                 <CardDescription>{t("trackYourInvestments")}</CardDescription>

@@ -177,7 +177,6 @@ body {
 
 .card {
   position: relative;
-  background-color: white;
 }
 
 .card::before {
