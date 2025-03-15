@@ -34,57 +34,57 @@ export function InvestmentOverview({ investments }: InvestmentOverviewProps) {
             </CardHeader>
             <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                    <Card>
+                    <Card className="bg-primary">
                         <CardContent className="p-4">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-muted-foreground">{t("totalInvested")}</p>
-                                    <h3 className="text-2xl font-bold">{formatCurrency(totalInvested)}</h3>
+                                    <p className="text-sm text-white">{t("totalInvested")}</p>
+                                    <h3 className="text-2xl font-bold text-forestiYellow dark:text-forestiGreen">{formatCurrency(totalInvested)}</h3>
                                 </div>
-                                <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                                    <DollarSign className="h-5 w-5 text-primary" />
+                                <div className="h-10 w-10 rounded-full bg-green-500/10 dark:bg-foreground/10 flex items-center justify-center">
+                                    <DollarSign className="h-5 w-5 text-forestiYellow dark:text-forestiGreen" />
                                 </div>
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card className="bg-primary">
                         <CardContent className="p-4">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-muted-foreground">{t("totalReturn")}</p>
-                                    <h3 className="text-2xl font-bold flex items-center">
+                                    <p className="text-sm text-white">{t("totalReturn")}</p>
+                                    <h3 className="text-2xl font-bold flex items-center text-forestiYellow dark:text-forestiGreen">
                                         {formatCurrency(totalReturn)}
                                         {isPositiveReturn ? (
-                                            <ArrowUpRight className="h-4 w-4 text-green-500 ml-1" />
+                                            <ArrowUpRight className="h-4 w-4 text-white ml-1" />
                                         ) : (
-                                            <ArrowDownRight className="h-4 w-4 text-red-500 ml-1" />
+                                            <ArrowDownRight className="h-4 w-4 text-forestiOrange ml-1" />
                                         )}
                                     </h3>
-                                    <p className={`text-xs ${isPositiveReturn ? "text-green-500" : "text-red-500"}`}>
+                                    <p className={`text-xs ${isPositiveReturn ? "text-white" : "text-forestiOrange"}`}>
                                         {returnPercentage.toFixed(2)}%
                                     </p>
                                 </div>
                                 <div
-                                    className={`h-10 w-10 rounded-full ${isPositiveReturn ? "bg-green-500/10" : "bg-red-500/10"} flex items-center justify-center`}
+                                    className={`h-10 w-10 rounded-full ${isPositiveReturn ? "bg-green-500/10 dark:bg-foreground/10" : "bg-forestiOrange/10"} flex items-center justify-center`}
                                 >
-                                    <TrendingUp className={`h-5 w-5 ${isPositiveReturn ? "text-green-500" : "text-red-500"}`} />
+                                    <TrendingUp className={`h-5 w-5 ${isPositiveReturn ? "text-forestiYellow dark:text-forestiGreen" : "text-forestiOrange"}`} />
                                 </div>
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card className="bg-primary">
                         <CardContent className="p-4">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-muted-foreground">{t("carbonCredits")}</p>
-                                    <h3 className="text-2xl font-bold">{totalCarbonCredits.toLocaleString()}</h3>
-                                    <p className="text-xs text-green-500">{t("tonsCO2Offset")}</p>
+                                    <p className="text-sm text-white">{t("carbonCredits")}</p>
+                                    <h3 className="text-2xl font-bold text-forestiYellow dark:text-forestiGreen">{totalCarbonCredits.toLocaleString()}</h3>
+                                    <p className="text-xs text-white">{t("tonsCO2Offset")}</p>
                                 </div>
-                                <div className="h-10 w-10 rounded-full bg-green-500/10 flex items-center justify-center">
+                                <div className="h-10 w-10 rounded-full bg-green-500/10 dark:bg-foreground/10 flex items-center justify-center">
                                     <svg
-                                        className="h-5 w-5 text-green-500"
+                                        className="h-5 w-5 text-forestiYellow dark:text-forestiGreen"
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         xmlns="http://www.w3.org/2000/svg"
