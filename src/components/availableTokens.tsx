@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Users, Coins, ArrowUpRight, TrendingUp, ShoppingCart, ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from "lucide-react"
+import { Users, ArrowUpRight, TrendingUp, ShoppingCart, ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Leaf } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -149,10 +149,10 @@ export function AvailableTokens() {
                                         <div
                                             className={`flex items-center ${
                                                 currentToken.trend === "up"
-                                                    ? "text-green-500"
+                                                    ? "text-forestiGreen"
                                                     : currentToken.trend === "down"
-                                                        ? "text-red-500"
-                                                        : "text-yellow-500"
+                                                        ? "text-forestiOrange"
+                                                        : "text-forestiYellow"
                                             }`}
                                         >
                                             {currentToken.trend === "up" && <ArrowUpRight className="h-4 w-4" />}
@@ -194,7 +194,7 @@ export function AvailableTokens() {
                                             </span>
                                         </div>
                                         <div className="flex items-center">
-                                            <Coins className="h-4 w-4 text-primary dark:text-forestiYellow mr-2" />
+                                            <Leaf className="h-4 w-4 text-primary dark:text-forestiYellow mr-2" />
                                             <span className="text-sm">
                                                 {currentToken.tokensSold.toLocaleString()} {t("tokensSold")}
                                             </span>
@@ -277,7 +277,7 @@ export function AvailableTokens() {
                                 <div className="grid grid-cols-4 items-center gap-4">
                                     <Label className="text-left">{t("projectedReturn")}</Label>
                                     <div className="col-span-3">
-                                        <p className="font-medium text-green-500">
+                                        <p className="font-medium text-forestiGreen">
                                             {formatCurrency(calculateReturn(investmentAmount, selectedToken.fees))}
                                         </p>
                                     </div>
@@ -286,7 +286,7 @@ export function AvailableTokens() {
                                 <div className="grid grid-cols-4 items-center gap-4">
                                     <Label className="text-left">{t("projectedGain")}</Label>
                                     <div className="col-span-3">
-                                        <p className="font-medium text-green-500">
+                                        <p className="font-medium text-forestiGreen">
                                             +{formatCurrency(calculateGain(investmentAmount, selectedToken.fees))}
                                             <span className="text-sm text-muted-foreground ml-2">({selectedToken.fees}%)</span>
                                         </p>

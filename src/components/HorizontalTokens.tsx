@@ -153,7 +153,7 @@ export function HorizontalTokens() {
                                 {/* Fees */}
                                 <div className="text-xs">
                                     <span className="text-muted-foreground">{t("fees")}: </span>
-                                    <span className="font-medium text-green-500">+{token.fees}%</span>
+                                    <span className="font-medium text-forestiGreen">+{token.fees}%</span>
                                 </div>
 
                                 {/* Botões */}
@@ -242,7 +242,7 @@ export function HorizontalTokens() {
                                 <div className="grid grid-cols-4 items-center gap-4">
                                     <Label className="text-left">{t("projectedReturn")}</Label>
                                     <div className="col-span-3">
-                                        <p className="font-medium text-green-500">
+                                        <p className="font-medium text-forestiGreen">
                                             {formatCurrency(calculateReturn(investmentAmount, selectedToken.fees))}
                                         </p>
                                     </div>
@@ -251,7 +251,7 @@ export function HorizontalTokens() {
                                 <div className="grid grid-cols-4 items-center gap-4">
                                     <Label className="text-left">{t("projectedGain")}</Label>
                                     <div className="col-span-3">
-                                        <p className="font-medium text-green-500">
+                                        <p className="font-medium text-forestiGreen">
                                             +{formatCurrency(calculateGain(investmentAmount, selectedToken.fees))}
                                             <span className="text-sm text-muted-foreground ml-2">({selectedToken.fees}%)</span>
                                         </p>

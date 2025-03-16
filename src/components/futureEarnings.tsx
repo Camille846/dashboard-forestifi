@@ -125,8 +125,8 @@ export function FutureEarnings({ investments }: FutureEarningsProps) {
                                     </div>
                                     <div className="flex flex-col items-end">
                                         <p className="text-xs lg:text-sm text-muted-foreground">{t("projectedReturn", { rate: (growthRate * 1.5).toFixed(1) })}</p>
-                                        <p className="text-base lg:text-xl font-bold text-green-500">+{formatCurrency(conservativeReturn)}</p>
-                                        <p className="text-xs lg:text-sm text-green-500">+{conservativeROI.toFixed(2)}%</p>
+                                        <p className="text-base lg:text-xl font-bold text-forestiGreen">+{formatCurrency(conservativeReturn)}</p>
+                                        <p className="text-xs lg:text-sm text-forestiGreen">+{conservativeROI.toFixed(2)}%</p>
                                     </div>
                                 </div>
                             </div>
@@ -159,8 +159,8 @@ export function FutureEarnings({ investments }: FutureEarningsProps) {
                                     </div>
                                     <div className="flex flex-col items-end">
                                         <p className="text-xs lg:text-sm text-muted-foreground">{t("projectedReturn", { rate: (growthRate * 0.5).toFixed(1) })}</p>
-                                        <p className="text-base lg:text-xl font-bold text-green-500">+{formatCurrency(moderateReturn)}</p>
-                                        <p className="text-xs lg:text-sm text-green-500">+{moderateROI.toFixed(2)}%</p>
+                                        <p className="text-base lg:text-xl font-bold text-forestiGreen">+{formatCurrency(moderateReturn)}</p>
+                                        <p className="text-xs lg:text-sm text-forestiGreen">+{moderateROI.toFixed(2)}%</p>
                                     </div>
                                 </div>
                             </div>
@@ -207,7 +207,7 @@ export function FutureEarnings({ investments }: FutureEarningsProps) {
                                         <Tooltip
                                             formatter={(value: number) => [formatCurrency(value), t("projectedValue", { rate: (growthRate * 0.5).toFixed(1) })]}
                                             labelFormatter={(label) => `${t("year", { rate: (growthRate * 0.5).toFixed(1) })} ${label}`}
-                                            contentStyle={{ backgroundColor: '#1a1a1a', color: '#FFF' }}
+                                            contentStyle={{ backgroundColor: 'var(--primary)', color: '#F87B36', borderRadius: '15px', fontWeight: 'bold' }}
                                             />
                                         <Line type="monotone" dataKey="value" stroke="#F87B36" activeDot={{ r: 6 }} />
                                     </LineChart>

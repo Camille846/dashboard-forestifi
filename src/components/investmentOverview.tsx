@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowUpRight, ArrowDownRight, DollarSign, TrendingUp } from "lucide-react"
+import { ArrowUpRight, ArrowDownRight, DollarSign, TrendingUp, Leaf } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import type { Investment } from "@/lib/types"
@@ -40,7 +40,7 @@ export function InvestmentOverview({ investments }: InvestmentOverviewProps) {
                                     <p className="text-sm text-white">{t("totalInvested")}</p>
                                     <h3 className="text-lg 2xl:text-2xl font-bold text-forestiYellow dark:text-forestiGreen">{formatCurrency(totalInvested)}</h3>
                                 </div>
-                                <div className="h-10 w-10 rounded-full bg-green-500/10 dark:bg-foreground/10 flex items-center justify-center">
+                                <div className="h-10 w-10 rounded-full bg-forestiGreen/10 dark:bg-foreground/10 flex items-center justify-center">
                                     <DollarSign className="h-5 w-5 text-forestiYellow dark:text-forestiGreen" />
                                 </div>
                             </div>
@@ -65,7 +65,7 @@ export function InvestmentOverview({ investments }: InvestmentOverviewProps) {
                                     </p>
                                 </div>
                                 <div
-                                    className={`h-10 w-10 rounded-full ${isPositiveReturn ? "bg-green-500/10 dark:bg-foreground/10" : "bg-forestiOrange/10"} flex items-center justify-center`}
+                                    className={`h-10 w-10 rounded-full ${isPositiveReturn ? "bg-forestiGreen/10 dark:bg-foreground/10" : "bg-forestiOrange/10"} flex items-center justify-center`}
                                 >
                                     <TrendingUp className={`h-5 w-5 ${isPositiveReturn ? "text-forestiYellow dark:text-forestiGreen" : "text-forestiOrange"}`} />
                                 </div>
@@ -81,26 +81,8 @@ export function InvestmentOverview({ investments }: InvestmentOverviewProps) {
                                     <h3 className="text-lg 2xl:text-2xl font-bold text-forestiYellow dark:text-forestiGreen">{totalCarbonCredits.toLocaleString()}</h3>
                                     <p className="text-xs text-white">{t("tonsCO2Offset")}</p>
                                 </div>
-                                <div className="h-10 w-10 rounded-full bg-green-500/10 dark:bg-foreground/10 flex items-center justify-center">
-                                    <svg
-                                        className="h-5 w-5 text-forestiYellow dark:text-forestiGreen"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                        />
-                                        <path
-                                            d="M8 12L11 15L16 9"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        />
-                                    </svg>
+                                <div className="h-10 w-10 rounded-full bg-forestiGreen/10 dark:bg-foreground/10 flex items-center justify-center">
+                                    <Leaf className="h-5 w-5 text-forestiYellow dark:text-forestiGreen" />
                                 </div>
                             </div>
                         </CardContent>

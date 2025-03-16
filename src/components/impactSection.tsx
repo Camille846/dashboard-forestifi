@@ -102,9 +102,9 @@ export function EnvironmentalImpactSection({ impact }: EnvironmentalImpactSectio
 
                     <div className="flex justify-between items-center">
                         <div className="flex items-center">
-                            <div className="h-8 w-8 rounded-full bg-green-500/10 flex items-center justify-center mr-2">
+                            <div className="h-8 w-8 rounded-full bg-forestiGreen/10 flex items-center justify-center mr-2">
                                 <svg
-                                    className="h-4 w-4 text-green-500"
+                                    className="h-4 w-4 text-forestiGreen"
                                     viewBox="0 0 24 24"
                                     fill="none"
                                     xmlns="http://www.w3.org/2000/svg"

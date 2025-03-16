@@ -95,7 +95,7 @@ export function InvestmentChart({ timeframe, investments }: InvestmentChartProps
                                 day: "numeric",
                             })
                         }}
-                        contentStyle={{ backgroundColor: '#1a1a1a', color: 'var(--forestiGreen)' }}
+                        contentStyle={{ backgroundColor: 'var(--primary)', color: '#F87B36', borderRadius: '15px', fontWeight: 'bold' }}
                     />
                     <Legend />
                     <Line
