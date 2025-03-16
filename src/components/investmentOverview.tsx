@@ -108,7 +108,7 @@ export function InvestmentOverview({ investments }: InvestmentOverviewProps) {
                 </div>
 
                 <Tabs defaultValue="month" onValueChange={setTimeframe}>
-                    <div className="flex justify-between items-center mb-4">
+                    <div className="flex lg:flex-row flex-col justify-between lg:items-center gap-3 mb-4">
                         <h3 className="text-lg font-medium">{t("investmentPerformance")}</h3>
                         <TabsList>
                             <TabsTrigger value="week">{t("week")}</TabsTrigger>
