@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import type { Investment } from "@/lib/types"
 import { formatCurrency, formatDateLocale } from "@/lib/utils"
 import { useTranslation } from "@/lib/i18n"
-import {Avatar, AvatarImage} from "@/components/ui/avatar"
+import { Avatar, AvatarImage } from "@/components/ui/avatar"
 
 interface InvestmentPortfolioProps {
     investments: Investment[]
@@ -75,14 +75,14 @@ export function InvestmentPortfolio({ investments }: InvestmentPortfolioProps) {
     }
 
     return (
-        <Card className="shadow-sm w-full card">
+        <Card className="shadow-sm w-full card 2xl:mx-10 lg:mx-5">
             <CardHeader className="pb-2">
                 <CardTitle>{t("investmentPortfolio")}</CardTitle>
                 <CardDescription>{t("yourNaturalAssets")}</CardDescription>
             </CardHeader>
             <CardContent>
                 <div className="overflow-x-auto">
-                    <Table>
+                    <Table className="min-w-full">
                         <TableHeader>
                             <TableRow>
                                 <TableHead className="cursor-pointer" onClick={() => handleSort("name")}>

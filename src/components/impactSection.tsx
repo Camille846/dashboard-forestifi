@@ -16,13 +16,13 @@ export function EnvironmentalImpactSection({ impact }: EnvironmentalImpactSectio
     const { co2Reduction, familiesBenefited, hectaresPreserved } = impact
 
     return (
-        <Card className="shadow-sm lg:w-[30%] card dark:bg-primary">
+        <Card className="shadow-sm lg:w-[35%] 2xl:w-[30%] card dark:bg-primary">
             <CardHeader className="pb-2">
                 <CardTitle>{t("environmentalImpact")}</CardTitle>
                 <CardDescription>{t("yourPositiveImpact")}</CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="relative h-[300px] w-full">
+                <div className="relative 2xl:h-[300px] lg:h-[200px] h-[300px] w-full">
                     <svg viewBox="0 0 400 300" className="w-full h-full" style={{ filter: "blur(30px)" }}>
                         <defs>
                             {/* Gradients */}

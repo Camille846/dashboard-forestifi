@@ -59,7 +59,7 @@ export function InvestmentChart({ timeframe, investments }: InvestmentChartProps
     const maxValue = Math.max(...chartData.map((d) => d.value)) * 1.05
 
     return (
-        <div className="w-full h-[300px]">
+        <div className="w-full h-[300px] lg:h-[200px] 2xl:h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                     <CartesianGrid

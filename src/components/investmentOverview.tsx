@@ -26,19 +26,19 @@ export function InvestmentOverview({ investments }: InvestmentOverviewProps) {
     const totalCarbonCredits = investments.reduce((sum, inv) => sum + (inv.carbonCredits || 0), 0)
 
     return (
-        <Card className="shadow-sm lg:w-[75%]">
+        <Card className="shadow-sm 2xl:w-[75%] lg:w-[70%] 2xl:ml-10">
             <CardHeader className="pb-2">
                 <CardTitle>{t("investmentOverview")}</CardTitle>
                 <CardDescription>{t("trackYourInvestments")}</CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                    <Card className="bg-primary">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 lg:mb-2 2xl:mb-6">
+                    <Card className="bg-primary lg:py-2 2xl:py-6">
                         <CardContent className="p-4">
                             <div className="flex items-center justify-between">
                                 <div>
                                     <p className="text-sm text-white">{t("totalInvested")}</p>
-                                    <h3 className="text-2xl font-bold text-forestiYellow dark:text-forestiGreen">{formatCurrency(totalInvested)}</h3>
+                                    <h3 className="text-lg 2xl:text-2xl font-bold text-forestiYellow dark:text-forestiGreen">{formatCurrency(totalInvested)}</h3>
                                 </div>
                                 <div className="h-10 w-10 rounded-full bg-green-500/10 dark:bg-foreground/10 flex items-center justify-center">
                                     <DollarSign className="h-5 w-5 text-forestiYellow dark:text-forestiGreen" />
@@ -47,12 +47,12 @@ export function InvestmentOverview({ investments }: InvestmentOverviewProps) {
                         </CardContent>
                     </Card>
 
-                    <Card className="bg-primary">
+                    <Card className="bg-primary lg:py-2 2xl:py-6">
                         <CardContent className="p-4">
                             <div className="flex items-center justify-between">
                                 <div>
                                     <p className="text-sm text-white">{t("totalReturn")}</p>
-                                    <h3 className="text-2xl font-bold flex items-center text-forestiYellow dark:text-forestiGreen">
+                                    <h3 className="text-lg 2xl:text-2xl font-bold flex items-center text-forestiYellow dark:text-forestiGreen">
                                         {formatCurrency(totalReturn)}
                                         {isPositiveReturn ? (
                                             <ArrowUpRight className="h-4 w-4 text-white ml-1" />
@@ -73,12 +73,12 @@ export function InvestmentOverview({ investments }: InvestmentOverviewProps) {
                         </CardContent>
                     </Card>
 
-                    <Card className="bg-primary">
+                    <Card className="bg-primary lg:py-2 2xl:py-6">
                         <CardContent className="p-4">
                             <div className="flex items-center justify-between">
                                 <div>
                                     <p className="text-sm text-white">{t("carbonCredits")}</p>
-                                    <h3 className="text-2xl font-bold text-forestiYellow dark:text-forestiGreen">{totalCarbonCredits.toLocaleString()}</h3>
+                                    <h3 className="text-lg 2xl:text-2xl font-bold text-forestiYellow dark:text-forestiGreen">{totalCarbonCredits.toLocaleString()}</h3>
                                     <p className="text-xs text-white">{t("tonsCO2Offset")}</p>
                                 </div>
                                 <div className="h-10 w-10 rounded-full bg-green-500/10 dark:bg-foreground/10 flex items-center justify-center">

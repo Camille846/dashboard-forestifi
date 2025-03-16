@@ -14,6 +14,7 @@ import { AvailableTokens } from "@/components/availableTokens"
 import { FutureEarnings } from "@/components/futureEarnings"
 import Loading from "@/components/ui/loading"
 import { AppSidebar } from "@/components/sidebar"
+import { HorizontalTokens } from "@/components/HorizontalTokens"
 
 export default function Dashboard() {
     const [investments, setInvestments] = useState<Investment[]>([])
@@ -103,14 +104,17 @@ export default function Dashboard() {
                 )
             case "portfolio":
                 return (
-                    <div className="flex flex-col lg:flex-row gap-5 justify-center lg:w-[85vw]">
-                        <InvestmentPortfolio investments={filteredInvestments} />
-                        <RecentTransactions transactions={filteredInvestments.flatMap((inv) => inv.transactions || [])} />
+                    <div className="flex-col gap-6 justify-center items-center">
+                        <div className="flex flex-col lg:flex-row gap-5 justify-center w-full lg:w-[85vw]">
+                            <InvestmentPortfolio investments={filteredInvestments} />
+                            <RecentTransactions transactions={filteredInvestments.flatMap((inv) => inv.transactions || [])} />
+                        </div>
+                        <HorizontalTokens />
                     </div>
                 )
             case "earnings":
                 return (
-                    <div className="flex flex-col lg:flex-row gap-5 justify-center lg:w-[85vw]">
+                    <div className="flex flex-col lg:flex-row gap-5 justify-center w-full lg:w-[85vw]">
                         <FutureEarnings investments={filteredInvestments} />
                         <AvailableTokens />
                     </div>
@@ -129,12 +133,13 @@ export default function Dashboard() {
                     currentTheme={theme || "light"}
                     toggleLanguage={toggleLanguage}
                     currentLanguage={locale}
+                    setSelectedComponent={setSelectedComponent}
                 />
-                <div className="container mx-4 px-4">
+                <div className="container mx-4 px-4 lg:mx-0 lg:ml-4 lg:mr-0 mb-4">
                     <div className="mt-6">
                         <TokenFilter onFilterChange={handleTokenFilterChange} />
                     </div>
-                    <div className="mt-8">
+                    <div className="mt-8 lg:mt-3 2xl:mt-6">
                         {renderComponent()}
                     </div>
                 </div>

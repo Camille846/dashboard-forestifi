@@ -1,27 +1,27 @@
-"use client"
-
 import { useState } from "react"
 import { Bell, Moon, Sun, Globe, Search, Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
 import { useTranslation } from "@/lib/i18n"
-import {AppSidebar} from "@/components/sidebar";
+import { AppSidebar } from "@/components/sidebar"
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 
 interface DashboardHeaderProps {
     toggleTheme: () => void
     currentTheme: string
     toggleLanguage: () => void
     currentLanguage: string
+    setSelectedComponent: (component: string) => void
 }
 
-export function DashboardHeader({ toggleTheme, currentTheme, toggleLanguage, currentLanguage }: DashboardHeaderProps) {
+export function DashboardHeader({ toggleTheme, currentTheme, toggleLanguage, currentLanguage, setSelectedComponent }: DashboardHeaderProps) {
     const { t } = useTranslation()
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
     return (
-        <header className="flex flex-col sm:flex-row justify-between items-center py-4 lg:py-0 border-b border-border bg-primary rounded-3xl px-4 mt-5 mx-5">
+        <header className="flex flex-col sm:flex-row justify-between items-center py-4 lg:py-0 border-b border-border bg-primary rounded-3xl px-4 mt-5 mx-5 lg:mx-10 2xl:mx-5">
             <div className="flex items-center mb-0">
                 <div className="flex items-center">
                     <div className="h-24 w-24 rounded-full flex items-center justify-center mr-2">
@@ -47,7 +47,10 @@ export function DashboardHeader({ toggleTheme, currentTheme, toggleLanguage, cur
                             </Button>
                         </SheetTrigger>
                         <SheetContent side="left" className="w-full bg-transparent border-0">
-                            <AppSidebar setSelectedComponent={() => {}} isOpen={isMobileMenuOpen} toggleSidebar={() => {}} />
+                            <VisuallyHidden>
+                                <SheetTitle>Menu</SheetTitle>
+                            </VisuallyHidden>
+                            <AppSidebar setSelectedComponent={setSelectedComponent} isOpen={isMobileMenuOpen} toggleSidebar={() => {}} />
                         </SheetContent>
                     </Sheet>
                 </div>
@@ -80,4 +83,3 @@ export function DashboardHeader({ toggleTheme, currentTheme, toggleLanguage, cur
         </header>
     )
 }
-
