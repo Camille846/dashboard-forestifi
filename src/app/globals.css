@@ -230,3 +230,33 @@ body {
     scrollbar-width: thin;
     scrollbar-color: var(--primary) transparent;
 }
+
+/* Animação do Skeleton */
+.skeleton {
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(0, 20%, 80%);
+  }
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
+}
+
+/* Para modo escuro */
+@media (prefers-color-scheme: dark) {
+  .skeleton {
+    animation: skeleton-loading-dark 1s linear infinite alternate;
+  }
+
+  @keyframes skeleton-loading-dark {
+    0% {
+      background-color: hsl(200, 20%, 20%);
+    }
+    100% {
+      background-color: hsl(200, 20%, 30%);
+    }
+  }
+}

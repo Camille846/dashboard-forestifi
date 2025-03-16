@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
@@ -8,6 +8,7 @@ import type { Investment } from "@/lib/types"
 import { formatCurrency, formatDateLocale } from "@/lib/utils"
 import { useTranslation } from "@/lib/i18n"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
+import { CustomSkeleton } from "@/components/ui/customSkeleton"
 
 interface InvestmentPortfolioProps {
     investments: Investment[]
@@ -17,6 +18,8 @@ export function InvestmentPortfolio({ investments }: InvestmentPortfolioProps) {
     const { t, locale } = useTranslation()
     const [sortBy, setSortBy] = useState<string>("name")
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc")
+    const [loadingImages, setLoadingImages] = useState<Record<string, boolean>>({})
+    const [imageUrls, setImageUrls] = useState<Record<string, string>>({})
 
     const handleSort = (column: string) => {
         if (sortBy === column) {
@@ -61,12 +64,18 @@ export function InvestmentPortfolio({ investments }: InvestmentPortfolioProps) {
         return sortOrder === "asc" ? comparison : -comparison
     })
 
-    const getLogoSrc = (type: string) => {
+    const getLogoSrc = async (type: string) => {
+        if (imageUrls[type]) {
+            return imageUrls[type]
+        }
         // Verifica se a imagem já está no localStorage
         const cachedLogo = localStorage.getItem(`logo_${type}`)
         if (cachedLogo) {
             return cachedLogo
         }
+
+        // Marca esta imagem específica como carregando
+        setLoadingImages(prev => ({ ...prev, [type]: true }))
 
         // Se não estiver no cache, carrega a imagem e salva
         const logoPath = (() => {
@@ -82,24 +91,38 @@ export function InvestmentPortfolio({ investments }: InvestmentPortfolioProps) {
             }
         })()
 
-        // Carrega e converte a imagem para base64
-        if (logoPath) {
-            fetch(logoPath)
-                .then(response => response.blob())
-                .then(blob => {
-                    const reader = new FileReader()
-                    reader.onloadend = () => {
-                        const base64data = reader.result as string
-                        localStorage.setItem(`logo_${type}`, base64data)
-                    }
-                    reader.readAsDataURL(blob)
-                })
-                .catch(error => console.error('Erro ao carregar logo:', error))
+        try {
+            const response = await fetch(logoPath)
+            const blob = await response.blob()
+            return new Promise<string>((resolve) => {
+                const reader = new FileReader()
+                reader.onloadend = () => {
+                    const base64data = reader.result as string
+                    localStorage.setItem(`logo_${type}`, base64data)
+                    setImageUrls(prev => ({ ...prev, [type]: base64data }))
+                    setLoadingImages(prev => ({ ...prev, [type]: false }))
+                    resolve(base64data)
+                }
+                reader.readAsDataURL(blob)
+            })
+        } catch (error) {
+            console.error('Erro ao carregar logo:', error)
+            setLoadingImages(prev => ({ ...prev, [type]: false }))
+            return logoPath
         }
-
-        return logoPath
     }
 
+    useEffect(() => {
+        // Carrega todas as imagens quando o componente montar
+        investments.forEach(async (investment) => {
+            try {
+                const imageUrl = await getLogoSrc(investment.type)
+                setImageUrls(prev => ({ ...prev, [investment.type]: imageUrl }))
+            } catch (error) {
+                console.error('Erro ao carregar imagem:', error)
+            }
+        })
+    }, [investments])
 
     return (
         <Card className="shadow-sm w-full card 2xl:mx-10 lg:mx-5">
@@ -161,7 +184,18 @@ export function InvestmentPortfolio({ investments }: InvestmentPortfolioProps) {
                                         </TableCell>
                                         <TableCell className="flex items-center justify-center">
                                             <Avatar className="border-2 border-">
-                                                <AvatarImage src={getLogoSrc(investment.type)} alt={investment.issuer} />
+                                                {loadingImages[investment.type] ? (
+                                                    <div className="relative w-10 h-10">
+                                                        <CustomSkeleton 
+                                                            className="absolute inset-0 rounded-full skeleton" 
+                                                        />
+                                                    </div>
+                                                ) : (
+                                                    <AvatarImage 
+                                                        src={imageUrls[investment.type]} 
+                                                        alt={investment.issuer} 
+                                                    />
+                                                )}
                                             </Avatar>
                                         </TableCell>
                                         <TableCell className="text-right">{formatCurrency(investment.amount)}</TableCell>
