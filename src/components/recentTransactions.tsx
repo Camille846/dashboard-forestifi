@@ -24,7 +24,7 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
                 <CardDescription>{t("latestActivity")}</CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-4 lg:max-h-[240px] 2xl:max-h-full lg:overflow-y-auto 2xl:overflow-visible lg:pr-2 2xl:pr-0 custom-scrollbar">
                     {sortedTransactions.length > 0 ? (
                         sortedTransactions.map((transaction) => (
                             <div key={transaction.id} className="flex items-center justify-between border-b pb-3 last:border-0">

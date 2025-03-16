@@ -114,7 +114,7 @@ export default function Dashboard() {
                 )
             case "earnings":
                 return (
-                    <div className="flex flex-col lg:flex-row gap-5 justify-center w-full lg:w-[85vw]">
+                    <div className="flex flex-col lg:flex-row gap-5 justify-center w-full lg:w-[85vw] lg:mt-5">
                         <FutureEarnings investments={filteredInvestments} />
                         <AvailableTokens />
                     </div>

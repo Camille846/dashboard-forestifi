@@ -125,7 +125,7 @@ export function HorizontalTokens() {
         <div className="w-full overflow-x-auto mt-5 lg:mx-10 2xl:mx-32">
             <div className="grid grid-cols-2 sm:grid-cols-none sm:flex sm:flex-row gap-4 min-w-full sm:min-w-0">
                 {tokens.map((token) => (
-                    <Card key={token.id} className="w-full sm:w-[150px] shrink-0">
+                    <Card key={token.id} className="w-full lg:w-[200px] 2xl:w-[250px] shrink-0">
                         <CardContent className="p-4">
                             <div className="space-y-3">
                                 {/* Avatar e Nome */}

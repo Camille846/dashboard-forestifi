@@ -9,7 +9,7 @@ interface AppSidebarProps {
 
 export function AppSidebar({ setSelectedComponent, isOpen, toggleSidebar }: AppSidebarProps) {
     return (
-        <aside className={`bg-primary text-white h-full lg:h-[85vh] 2xl:h-[80vh] lg:mt-42 p-4 md:mx-10 lg:mx-0 lg:ml-4 md:mt-32 rounded-lg flex flex-col items-center justify-center font-bold text-2xl fixed md:relative z-40 transition-transform transform ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}>
+        <aside className={`bg-primary text-white h-full lg:h-[100vh] 2xl:h-[80vh] lg:mt-42 p-4 md:mx-10 lg:mx-0 lg:ml-4 md:mt-32 rounded-lg flex flex-col items-center justify-center font-bold text-2xl fixed md:relative z-40 transition-transform transform ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}>
             <nav className="flex flex-col gap-6 items-center justify-center">
                 <Button
                     variant="ghost"

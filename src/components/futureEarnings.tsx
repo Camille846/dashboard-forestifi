@@ -64,7 +64,7 @@ export function FutureEarnings({ investments }: FutureEarningsProps) {
     const optimisticROI = (optimisticReturn / totalInvested) * 100
 
     return (
-        <Card className="shadow-sm w-full lg:py-2 2xl:py-6 lg:gap-3 2xl:ml-10">
+        <Card className="shadow-sm w-full lg:py-4 2xl:py-6 lg:gap-3 2xl:ml-10 lg:ml-5">
             <CardHeader className="pb-1 lg:pb-0">
                 <CardTitle className="text-lg lg:text-xl">{t("futureEarnings", { rate: (growthRate * 0.5).toFixed(1) })}</CardTitle>
                 <CardDescription className="text-sm">{t("futureEarningsDesc", { rate: (growthRate * 0.5).toFixed(1) })}</CardDescription>
