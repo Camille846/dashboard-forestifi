@@ -114,6 +114,12 @@ const translations = {
         initiatingPurchase: "Initiating purchase process...",
         purchaseDescription: `Congratulations! The purchase of {token} is being processed.`,
         undo: "Undo",
+        notificationNewToken: "New Token Active!",
+        notificationMarketUpdate: "Market Update",
+        notificationGuaranaDesc: "Guaraná token has been successfully activated",
+        notificationMarketDesc: "New tokens available for trading",
+        justNow: "Just now",
+        hoursAgo: "{hours}h ago",
     },
     pt: {
         loading: "Carregando...",
@@ -226,6 +232,12 @@ const translations = {
         initiatingPurchase: "Iniciando processo de compra...",
         purchaseDescription: `Parabéns! A compra de {token} está sendo processada.`,
         undo: "Desfazer",
+        notificationNewToken: "Novo Token Ativo!",
+        notificationMarketUpdate: "Atualização de Mercado",
+        notificationGuaranaDesc: "Token de Guaraná foi ativado com sucesso",
+        notificationMarketDesc: "Novos tokens disponíveis para compra",
+        justNow: "Agora mesmo",
+        hoursAgo: "há {hours}h",
     },
 }
 

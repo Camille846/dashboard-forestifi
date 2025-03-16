@@ -7,6 +7,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/s
 import { useTranslation } from "@/lib/i18n"
 import { AppSidebar } from "@/components/sidebar"
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
+import { NotificationPanel } from "@/components/NotificationPanel"
 
 interface DashboardHeaderProps {
     toggleTheme: () => void
@@ -19,6 +20,7 @@ interface DashboardHeaderProps {
 export function DashboardHeader({ toggleTheme, currentTheme, toggleLanguage, currentLanguage, setSelectedComponent }: DashboardHeaderProps) {
     const { t } = useTranslation()
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+    const [isNotificationOpen, setIsNotificationOpen] = useState(false)
 
     const handleComponentSelection = (component: string) => {
         setSelectedComponent(component)
@@ -81,10 +83,20 @@ export function DashboardHeader({ toggleTheme, currentTheme, toggleLanguage, cur
                     <span className="sr-only">{t("toggleTheme")}</span>
                 </Button>
 
-                <Button variant="ghost" size="icon" title={t("notifications")} className="text-white cursor-pointer">
-                    <Bell className="h-5 w-5" />
-                    <span className="sr-only">{t("notifications")}</span>
-                </Button>
+                <div className="relative z-10">
+                    <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        title={t("notifications")} 
+                        className="text-white cursor-pointer"
+                        onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+                    >
+                        <Bell className="h-5 w-5" />
+                        <span className="sr-only">{t("notifications")}</span>
+                    </Button>
+                    
+                    {isNotificationOpen && <NotificationPanel />}
+                </div>
 
                 <Avatar>
                     <AvatarImage src="/placeholder-user.jpg" alt="User" />
