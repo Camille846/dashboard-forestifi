@@ -104,20 +104,46 @@ export function HorizontalTokens() {
     }
 
     const getLogoSrc = (name: string) => {
-        switch (name) {
-            case "GUA 1":
-                return "/logoGua.png"
-            case "PIR 1":
-                return "/logoPir.jpg"
-            case "CAC 1":
-                return "/logoCac.png"
-            case "GUA 2":
-                return "/logoGua.png"
-            case "PIR 2":
-                return "/logoPir.jpg"
-            default:
-                return ""
+        // Verifica se a imagem já está no localStorage
+        const cachedLogo = localStorage.getItem(`logo_horizontal_${name}`)
+        if (cachedLogo) {
+            return cachedLogo
         }
+
+        // Se não estiver no cache, carrega a imagem e salva
+        const logoPath = (() => {
+            switch (name) {
+                case "GUA 1":
+                    return "/logoGua.png"
+                case "PIR 1":
+                    return "/logoPir.jpg"
+                case "CAC 1":
+                    return "/logoCac.png"
+                case "GUA 2":
+                    return "/logoGua.png"
+                case "PIR 2":
+                    return "/logoPir.jpg"
+                default:
+                    return ""
+            }
+        })()
+
+        // Carrega e converte a imagem para base64
+        if (logoPath) {
+            fetch(logoPath)
+                .then(response => response.blob())
+                .then(blob => {
+                    const reader = new FileReader()
+                    reader.onloadend = () => {
+                        const base64data = reader.result as string
+                        localStorage.setItem(`logo_horizontal_${name}`, base64data)
+                    }
+                    reader.readAsDataURL(blob)
+                })
+                .catch(error => console.error('Erro ao carregar logo:', error))
+        }
+
+        return logoPath
     }
 
     return (

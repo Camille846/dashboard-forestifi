@@ -62,17 +62,44 @@ export function InvestmentPortfolio({ investments }: InvestmentPortfolioProps) {
     })
 
     const getLogoSrc = (type: string) => {
-        switch (type) {
-            case "GUA":
-                return "/logoGua.png"
-            case "PIR":
-                return "/logoPir.jpg"
-            case "CAC":
-                return "/logoCac.png"
-            default:
-                return ""
+        // Verifica se a imagem já está no localStorage
+        const cachedLogo = localStorage.getItem(`logo_${type}`)
+        if (cachedLogo) {
+            return cachedLogo
         }
+
+        // Se não estiver no cache, carrega a imagem e salva
+        const logoPath = (() => {
+            switch (type) {
+                case "GUA":
+                    return "/logoGua.png"
+                case "PIR":
+                    return "/logoPir.jpg"
+                case "CAC":
+                    return "/logoCac.png"
+                default:
+                    return ""
+            }
+        })()
+
+        // Carrega e converte a imagem para base64
+        if (logoPath) {
+            fetch(logoPath)
+                .then(response => response.blob())
+                .then(blob => {
+                    const reader = new FileReader()
+                    reader.onloadend = () => {
+                        const base64data = reader.result as string
+                        localStorage.setItem(`logo_${type}`, base64data)
+                    }
+                    reader.readAsDataURL(blob)
+                })
+                .catch(error => console.error('Erro ao carregar logo:', error))
+        }
+
+        return logoPath
     }
+
 
     return (
         <Card className="shadow-sm w-full card 2xl:mx-10 lg:mx-5">
