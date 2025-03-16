@@ -97,7 +97,7 @@ export default function Dashboard() {
         switch (selectedComponent) {
             case "overview":
                 return (
-                    <div className="flex flex-col lg:flex-row gap-5 justify-center lg:w-[85vw]">
+                    <div className="flex flex-col lg:flex-row gap-5 justify-center w-[85vw]">
                         <InvestmentOverview investments={filteredInvestments} />
                         <EnvironmentalImpactSection impact={environmentalImpact} />
                     </div>
@@ -105,7 +105,7 @@ export default function Dashboard() {
             case "portfolio":
                 return (
                     <div className="flex-col gap-6 justify-center items-center">
-                        <div className="flex flex-col lg:flex-row gap-5 justify-center w-full lg:w-[85vw]">
+                        <div className="flex flex-col lg:flex-row gap-5 justify-center w-[85vw]">
                             <InvestmentPortfolio investments={filteredInvestments} />
                             <RecentTransactions transactions={filteredInvestments.flatMap((inv) => inv.transactions || [])} />
                         </div>
@@ -114,7 +114,7 @@ export default function Dashboard() {
                 )
             case "earnings":
                 return (
-                    <div className="flex flex-col lg:flex-row gap-5 justify-center w-full lg:w-[85vw] lg:mt-5">
+                    <div className="flex flex-col lg:flex-row gap-5 justify-center w-[85vw] lg:mt-5">
                         <FutureEarnings investments={filteredInvestments} />
                         <AvailableTokens />
                     </div>
