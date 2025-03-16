@@ -141,5 +141,6 @@ src/
 - Adaptação de visualizações para mobile
 
 ## 🔗 Links Importantes
+- [Figma](https://www.figma.com/design/FjaBY4BpVnLddh955Yz7mE/forestifi)
 - [Repositório](https://github.com/Camille846/dashboard-forestifi)
 - [Demo](https://dashboard-forestifi.vercel.app/)
