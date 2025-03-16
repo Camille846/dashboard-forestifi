@@ -17,7 +17,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
-import { Skeleton } from "@/components/ui/skeleton"
+import { CustomSkeleton } from "@/components/ui/customSkeleton"
 import {
   Tooltip,
   TooltipContent,
@@ -619,12 +619,12 @@ function SidebarMenuSkeleton({
       {...props}
     >
       {showIcon && (
-        <Skeleton
+        <CustomSkeleton
           className="size-4 rounded-md"
           data-sidebar="menu-skeleton-icon"
         />
       )}
-      <Skeleton
+      <CustomSkeleton
         className="h-4 max-w-(--skeleton-width) flex-1"
         data-sidebar="menu-skeleton-text"
         style={
