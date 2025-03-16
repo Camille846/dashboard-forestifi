@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Bell, Moon, Sun, Globe, Search, Menu, X } from "lucide-react"
+import { Bell, Moon, Sun, Globe, Search, Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
