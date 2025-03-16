@@ -57,7 +57,7 @@ export function EnvironmentalImpactSection({ impact }: EnvironmentalImpactSectio
                     <div className="absolute left-1/4 top-2/3 -translate-x-1/2 -translate-y-1/2 text-center">
                         <div className="bg-primary dark:bg-forestiGreen rounded-full p-4 shadow-lg w-32 h-32 flex flex-col items-center justify-center">
                             <div className="text-2xl font-bold text-white dark:text-primary">{hectaresPreserved}</div>
-                            <div className="text-xs text-white">hectares</div>
+                            <div className="text-xs text-white dark:text-primary">hectares</div>
                         </div>
                     </div>
 
