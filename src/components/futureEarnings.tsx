@@ -198,7 +198,7 @@ export function FutureEarnings({ investments }: FutureEarningsProps) {
                                     </div>
                                 </div>
                             </div>
-                            <div className="h-[150px] lg:h-[200px]">
+                            <div className="h-[150px] lg:h-[200px] text-primary">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <LineChart data={optimisticData}>
                                         <CartesianGrid strokeDasharray="3 3" />
@@ -207,7 +207,8 @@ export function FutureEarnings({ investments }: FutureEarningsProps) {
                                         <Tooltip
                                             formatter={(value: number) => [formatCurrency(value), t("projectedValue", { rate: (growthRate * 0.5).toFixed(1) })]}
                                             labelFormatter={(label) => `${t("year", { rate: (growthRate * 0.5).toFixed(1) })} ${label}`}
-                                        />
+                                            contentStyle={{ backgroundColor: '#1a1a1a', color: '#FFF' }}
+                                            />
                                         <Line type="monotone" dataKey="value" stroke="#F87B36" activeDot={{ r: 6 }} />
                                     </LineChart>
                                 </ResponsiveContainer>
