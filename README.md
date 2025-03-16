@@ -108,6 +108,7 @@ Este projeto foi desenvolvido como parte do desafio técnico da ForestiFi, que e
 
 ## 📁 Estrutura do Projeto
 
+```
 public/
 ├── fonts/
 │   └── BRSonomafamilyfont
