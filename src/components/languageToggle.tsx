@@ -12,7 +12,7 @@ export function LanguageToggle({ toggleLanguage, currentLanguage }: LanguageTogg
     return (
         <Button variant="outline" size="sm" onClick={toggleLanguage} className="flex items-center gap-2">
             <Globe className="h-4 w-4" />
-            {currentLanguage === "PT" ? "PT" : "EN"}
+            {currentLanguage === "en" ? "EN" : "PT"}
         </Button>
     )
 }

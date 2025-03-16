@@ -2,7 +2,6 @@
 
 import { createContext, useContext, useState, type ReactNode } from "react"
 
-// Define translations
 const translations = {
     en: {
         loading: "Loading...",
@@ -238,9 +237,21 @@ type TranslationContextType = {
 
 const TranslationContext = createContext<TranslationContextType | undefined>(undefined)
 
-// Provider component
 export function TranslationProvider({ children }: { children: ReactNode }) {
-    const [locale, setLocale] = useState<string>("en")
+    const [locale, setLocale] = useState<string>(() => {
+        // Verifica se há uma preferência salva, senão usa "pt" como padrão
+        if (typeof window !== 'undefined') {
+            return localStorage.getItem('language') || "pt"
+        }
+        return "pt"
+    })
+
+    const handleSetLocale = (newLocale: string) => {
+        setLocale(newLocale)
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('language', newLocale)
+        }
+    }
 
     const t = (key: string, params?: Record<string, string>): string => {
         let text = translations[locale as keyof typeof translations]?.[key as keyof (typeof translations)["en"]] || key
@@ -255,10 +266,9 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
         return text
     }
 
-    return <TranslationContext.Provider value={{ t, locale, setLocale }}>{children}</TranslationContext.Provider>
+    return <TranslationContext.Provider value={{ t, locale, setLocale: handleSetLocale }}>{children}</TranslationContext.Provider>
 }
 
-// Hook for using translations
 export function useTranslation() {
     const context = useContext(TranslationContext)
 
