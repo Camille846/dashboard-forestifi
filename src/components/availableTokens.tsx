@@ -308,7 +308,7 @@ export function AvailableTokens() {
                     </div>
 
                     <DialogFooter>
-                        <Button variant="outline" onClick={() => setSimulateDialogOpen(false)}>
+                        <Button variant="outline" onClick={() => setSimulateDialogOpen(false)} className="cursor-pointer">
                             {t("close")}
                         </Button>
                         <Button
@@ -316,6 +316,7 @@ export function AvailableTokens() {
                                 setSimulateDialogOpen(false)
                                 if (selectedToken) handleBuy(selectedToken)
                             }}
+                            className="cursor-pointer dark:bg-forestiGreen dark:hover:bg-forestiGreen/70"
                         >
                             {t("proceedToBuy")}
                         </Button>

@@ -70,7 +70,9 @@ export function DashboardHeader({ toggleTheme, currentTheme, toggleLanguage, cur
                     title={currentLanguage === "en" ? "Switch to Portuguese" : "Mudar para Inglês"}
                     className="text-white cursor-pointer"
                 >
-                    <Globe className="h-5 w-5" />
+                    <span className="h-5 w-5 flex items-center justify-center text-sm font-medium">
+                        {currentLanguage === "en" ? "EN" : "PT"}
+                    </span>
                     <span className="sr-only">{t("toggleLanguage")}</span>
                 </Button>
 

@@ -57,7 +57,7 @@ export function TokenFilter({ onFilterChange }: TokenFilterProps) {
     )
 
     return (
-        <div className="flex items-center space-x-2">
+        <div className="flex items-start lg:items-center space-x-2 lg:flex-row flex-col">
             <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                     <Button variant="outline" role="combobox" aria-expanded={open} className="justify-between bg-primary text-white hover:bg-primary/60 cursor-pointer">

@@ -134,7 +134,7 @@ export function HorizontalTokens() {
                                         <AvatarImage src={getLogoSrc(token.name)} alt={token.name} />
                                     </Avatar>
                                     <div>
-                                        <h3 className="font-semibold text-primary text-sm">{token.name}</h3>
+                                        <h3 className="font-semibold text-primary text-sm dark:text-white">{token.name}</h3>
                                         <p className="text-xs font-medium">
                                             {formatCurrency(token.value)}
                                         </p>
@@ -161,7 +161,7 @@ export function HorizontalTokens() {
                                     <Button 
                                         variant="outline" 
                                         size="sm"
-                                        className="w-full bg-forestiOrange text-white hover:bg-forestiOrange/70"
+                                        className="w-full bg-forestiOrange text-white hover:bg-forestiOrange/70 cursor-pointer"
                                         onClick={() => handleSimulate(token)}
                                     >
                                         <TrendingUp className="h-3 w-3 mr-1" />
@@ -169,7 +169,7 @@ export function HorizontalTokens() {
                                     </Button>
                                     <Button 
                                         size="sm"
-                                        className="w-full dark:bg-forestiGreen dark:hover:bg-forestiGreen/70"
+                                        className="w-full dark:bg-forestiGreen dark:hover:bg-forestiGreen/70 cursor-pointer"
                                         onClick={() => handleBuy(token)}
                                     >
                                         <ShoppingCart className="h-3 w-3 mr-1" />
@@ -273,7 +273,7 @@ export function HorizontalTokens() {
                     </div>
 
                     <DialogFooter>
-                        <Button variant="outline" onClick={() => setSimulateDialogOpen(false)}>
+                        <Button variant="outline" onClick={() => setSimulateDialogOpen(false)} className="cursor-pointer">
                             {t("close")}
                         </Button>
                         <Button
@@ -281,6 +281,7 @@ export function HorizontalTokens() {
                                 setSimulateDialogOpen(false)
                                 if (selectedToken) handleBuy(selectedToken)
                             }}
+                            className="cursor-pointer dark:bg-forestiGreen dark:hover:bg-forestiGreen/70"
                         >
                             {t("proceedToBuy")}
                         </Button>
